@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectobd.vistas;
+package proyectobd.vistas.modulo.compraVenta;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,6 +87,7 @@ import proyectobd.modelos.TipoInasistencia;
 import proyectobd.modelos.TipoPago;
 import proyectobd.modelos.TipoTransaccion;
 import proyectobd.modelos.Vacaciones;
+import proyectobd.vistas.modulo.compraVenta.Compra;
 /**
  *
  * @author israe
@@ -95,7 +96,17 @@ public class vistaprueba {
 
     public static void main(String args[]) throws ParseException {
        //ejemplo
-        MySQLMovimientoFinanciero nuevo = new MySQLMovimientoFinanciero();
+       boolean i = false;
+       if(i){
+            Compra compra = new Compra();
+            compra.setVisible(true);
+       }else{
+           Venta venta = new Venta();
+           venta.setVisible(true);
+       }
+       
+       
+        /*MySQLMovimientoFinanciero nuevo = new MySQLMovimientoFinanciero();
         
         MovimientoFinanciero aux = new MovimientoFinanciero();
         
@@ -117,6 +128,6 @@ public class vistaprueba {
         for (int i = 0; i < lista.size(); i++) {
             System.out.println("ID: "+ lista.get(i).getIdMovimientoFinanciero()+" Nombre: "+ lista.get(i).getMonto()+"Fecha:"+lista.get(i).getFecha());
             System.out.println("Dia:" + lista.get(i).obtenerCalendar().get(Calendar.DATE) + "Mes: " + lista.get(i).obtenerCalendar().get(Calendar.MONTH) + "Año: " +lista.get(i).obtenerCalendar().get(Calendar.YEAR) );
-        }
+        }*/
     }
 }

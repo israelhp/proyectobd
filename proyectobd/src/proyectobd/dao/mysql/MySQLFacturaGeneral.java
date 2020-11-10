@@ -29,6 +29,7 @@ public class MySQLFacturaGeneral implements FacturaGeneralDAO {
     private final String ELIMINAR = "DELETE FROM factura_general WHERE id_factura_general = ?; ";
     private final String OBTENERPORID = "SELECT id_factura_general, fecha, total, id_empleado, id_empresa, id_tipo_pago, id_tipo_factura FROM factura_general WHERE id_factura_general = ?; ";
     private final String OBTENER = "SELECT id_factura_general, fecha, total, id_empleado, id_empresa, id_tipo_pago, id_tipo_factura FROM factura_general; ";
+    private final String OBTENERFECHA = "SELECT id_factura_general, fecha, total, id_empleado, id_empresa, id_tipo_pago, id_tipo_factura FROM factura_general WHERE fecha BETWEEN ? AND ?"; 
 
     private Connection conexion;
     private PreparedStatement sentencia;
@@ -129,6 +130,27 @@ public class MySQLFacturaGeneral implements FacturaGeneralDAO {
         try {
             conexion = new MySQLConexion().conectar();
             sentencia = conexion.prepareStatement(OBTENER);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                FacturaGeneral facturaGeneral = parserFacturaGeneral();
+                lista.add(facturaGeneral);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
+    
+
+    public ArrayList<FacturaGeneral> getByDate(String initialDate, String finalDate) {
+        ArrayList<FacturaGeneral> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement(OBTENERFECHA);
+            sentencia.setString(1, initialDate);
+            sentencia.setString(2, finalDate);
             resultados = sentencia.executeQuery();
             while (resultados.next()) {
                 FacturaGeneral facturaGeneral = parserFacturaGeneral();
