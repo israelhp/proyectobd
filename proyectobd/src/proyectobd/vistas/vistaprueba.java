@@ -5,6 +5,8 @@
  */
 package proyectobd.vistas;
 
+import proyectobd.vistas.modulo.inventario.Inventario;
+import proyectobd.vistas.modulo.inventarioG.InventarioG;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,6 +89,7 @@ import proyectobd.modelos.TipoInasistencia;
 import proyectobd.modelos.TipoPago;
 import proyectobd.modelos.TipoTransaccion;
 import proyectobd.modelos.Vacaciones;
+
 import proyectobd.vistas.modulo.empleados.Consultar;
 import proyectobd.vistas.modulo.empleados.IngresoEmpleado;
 import proyectobd.vistas.modulo.empleados.ModificarEmpleado;
@@ -95,6 +98,9 @@ import proyectobd.vistas.modulo.equipos.ConsultarEquip;
 import proyectobd.vistas.modulo.equipos.CrearEquip;
 import proyectobd.vistas.modulo.equipos.Equipos;
 import proyectobd.vistas.modulo.equipos.ModificarEquip;
+
+
+
 /**
  *
  * @author israe
@@ -103,6 +109,7 @@ public class vistaprueba {
 
     public static void main(String args[]) throws ParseException {
         Login login = new Login();
-        login.setVisible(true);
+        login.setVisible(true);   
     }
+
 }
