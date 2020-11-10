@@ -95,7 +95,7 @@ public class vistaprueba {
 
     public static void main(String args[]) throws ParseException {
        //ejemplo
-        MySQLMovimientoFinanciero nuevo = new MySQLMovimientoFinanciero();
+       /* MySQLMovimientoFinanciero nuevo = new MySQLMovimientoFinanciero();
         
         MovimientoFinanciero aux = new MovimientoFinanciero();
         
@@ -118,5 +118,13 @@ public class vistaprueba {
             System.out.println("ID: "+ lista.get(i).getIdMovimientoFinanciero()+" Nombre: "+ lista.get(i).getMonto()+"Fecha:"+lista.get(i).getFecha());
             System.out.println("Dia:" + lista.get(i).obtenerCalendar().get(Calendar.DATE) + "Mes: " + lista.get(i).obtenerCalendar().get(Calendar.MONTH) + "Año: " +lista.get(i).obtenerCalendar().get(Calendar.YEAR) );
         }
+*/  MySQLTipoFactura aux = new MySQLTipoFactura();
+    ArrayList <TipoFactura> lista = aux.listar();
+    
+    for(int i=0; i<lista.size(); i++){
+        System.out.println("ID: "+lista.get(i).getIdTipoFactura() +  " Tipo:"+ lista.get(i).getTipo());
+    }    
+
     }
+
 }
