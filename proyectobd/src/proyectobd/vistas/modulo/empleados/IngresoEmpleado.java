@@ -147,11 +147,9 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -243,10 +241,6 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_User_96px_2.png"))); // NOI18N
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, 90));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Menu_32px.png"))); // NOI18N
-        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
         jLabel14.setBackground(new java.awt.Color(238, 112, 82));
         jLabel14.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(238, 112, 82));
@@ -281,15 +275,6 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Multiply_32px.png"))); // NOI18N
-        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
-            }
-        });
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, 30, 50));
-
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -297,7 +282,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 jLabel9MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 30, 50));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 30, 50));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Expand_Arrow_32px.png"))); // NOI18N
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -306,7 +291,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 jLabel15MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 30, 50));
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, 30, 50));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 760, 50));
 
@@ -608,13 +593,6 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        int respuesta = JOptionPane.showConfirmDialog(null, "Desea salir de la aplicacion?", "Salir", JOptionPane.YES_NO_OPTION);
-        if (respuesta == 0) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_jLabel10MouseClicked
-
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         if (this.regreso.equalsIgnoreCase("ModuloEmpleados")) {
             this.dispose();
@@ -779,7 +757,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 DateFormat dateFormat = new SimpleDateFormat("hh:mm");
 
                 Date DHoraSalida = dateFormat.parse(horario.getSalida());
-                Date DHoraActual = dateFormat.parse("10:00:00");
+                Date DHoraActual = dateFormat.parse(horaActual);
 
                 if (DHoraSalida.compareTo(DHoraActual) > 0) {
                     int respuesta = JOptionPane.showConfirmDialog(null, "Tu hora de salida es: " + horario.getSalida() + ". Estas seguro que deseas salir? (se te contara como inasistencia)", "Cerrando Sesion", JOptionPane.YES_NO_OPTION);
@@ -866,10 +844,8 @@ public class IngresoEmpleado extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBHorario;
     private javax.swing.JComboBox<String> jCBPuesto;
     private com.toedter.calendar.JDateChooser jDCFecha;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;

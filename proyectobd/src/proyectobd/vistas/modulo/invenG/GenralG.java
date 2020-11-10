@@ -31,13 +31,15 @@ import javax.swing.ListCellRenderer;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+
 public class GenralG extends javax.swing.JFrame {
-        
+
     /**
      * Creates new form GenralG
      */
     DefaultTableModel model = new DefaultTableModel();
-    int ref=0;
+    int ref = 0;
+
     public GenralG() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -163,7 +165,7 @@ public class GenralG extends javax.swing.JFrame {
         int id_p;
         int id_prov;
         int id_inv;
-        int dis=0;
+        int dis = 0;
         float pre;
         String nom;
         String des;
@@ -172,13 +174,13 @@ public class GenralG extends javax.swing.JFrame {
         MySQLProducto producto = new MySQLProducto();
         MySQLInventarioGeneral inv_g = new MySQLInventarioGeneral();
         MySQLProveedor prov = new MySQLProveedor();
-        ArrayList <Producto> prod = producto.listar();
-        ArrayList <InventarioGeneral> inv = inv_g.listar();
-        int a= model.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {          
-            model.removeRow(model.getRowCount()-1);
+        ArrayList<Producto> prod = producto.listar();
+        ArrayList<InventarioGeneral> inv = inv_g.listar();
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            model.removeRow(model.getRowCount() - 1);
         }
-        if(ref==0){
+        if (ref == 0) {
             model.addColumn("CODIGO");
             model.addColumn("NOMBRE");
             model.addColumn("PRECIO");
@@ -186,34 +188,36 @@ public class GenralG extends javax.swing.JFrame {
             model.addColumn("DESCRIPCION");
             model.addColumn("PROVEEDOR");
             model.addColumn("DIRECCION PROVEEDOR");
-            ref=1;
+            ref = 1;
         }
-        for(int i=0;i<prod.size();i++){
-            id_p=prod.get(i).getIdProducto();
-            id_prov=prod.get(i).getIdProveedor();
-            nom=producto.obtenerId(id_p).getNombre();
-            des=producto.obtenerId(id_p).getDescripcion();
-            prove=prov.obtenerId(id_prov).getNombre();
-            pre=producto.obtenerId(id_p).getPrecio();
-            direc=prov.obtenerId(id_prov).getDireccion();
-            for(int j=0;j<inv.size();j++){
-                id_inv=inv.get(j).getIdInventarioGeneral();
-                if(id_inv==id_p){
-                    dis=inv.get(j).getCantidad();
+        for (int i = 0; i < prod.size(); i++) {
+            id_p = prod.get(i).getIdProducto();
+            id_prov = prod.get(i).getIdProveedor();
+            nom = producto.obtenerId(id_p).getNombre();
+            des = producto.obtenerId(id_p).getDescripcion();
+            prove = prov.obtenerId(id_prov).getNombre();
+            pre = producto.obtenerId(id_p).getPrecio();
+            direc = prov.obtenerId(id_prov).getDireccion();
+            for (int j = 0; j < inv.size(); j++) {
+                id_inv = inv.get(j).getIdInventarioGeneral();
+                if (id_inv == id_p) {
+                    dis = inv.get(j).getCantidad();
                 }
             }
-            model.addRow(new Object[]{id_p,nom,pre,dis,des,prove,direc});
+            model.addRow(new Object[]{id_p, nom, pre, dis, des, prove, direc});
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        InventarioG inv = new InventarioG();
+        inv.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int a= model.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {          
-            model.removeRow(model.getRowCount()-1);
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            model.removeRow(model.getRowCount() - 1);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

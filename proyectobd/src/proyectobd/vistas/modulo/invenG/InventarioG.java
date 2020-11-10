@@ -5,11 +5,17 @@
  */
 package proyectobd.vistas.modulo.invenG;
 
+import proyectobd.modelos.Empleado;
+import proyectobd.vistas.Admin;
+import static proyectobd.vistas.modulo.inven.Inventario.info;
+
 /**
  *
  * @author emman
  */
 public class InventarioG extends javax.swing.JFrame {
+
+    public static Empleado info;
 
     /**
      * Creates new form InventarioG
@@ -71,6 +77,11 @@ public class InventarioG extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, -1, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -106,7 +117,9 @@ public class InventarioG extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        dispose();
+        this.dispose();
+        Admin modAdmin = new Admin(info);
+        modAdmin.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -118,6 +131,12 @@ public class InventarioG extends javax.swing.JFrame {
         g.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        this.dispose();
+        Admin modAdmin = new Admin(info);
+        modAdmin.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments

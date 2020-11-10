@@ -5,11 +5,32 @@
  */
 package proyectobd.vistas.modulo.compraVenta;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import proyectobd.controladores.ControladorHorario;
+import proyectobd.dao.mysql.MySQLAsistencia;
+import proyectobd.dao.mysql.MySQLInasistencia;
+import proyectobd.excepciones.Excepcion;
+import proyectobd.modelos.Asistencia;
+import proyectobd.modelos.Empleado;
+import proyectobd.modelos.Horario;
+import proyectobd.modelos.Inasistencia;
+import proyectobd.vistas.Login;
+
 /**
  *
  * @author ricar
  */
 public class Venta extends javax.swing.JFrame {
+    private ControladorHorario controladorHorario;
+    public static Empleado info;
+    public static String regreso;
 
     /**
      * Creates new form Venta
@@ -17,6 +38,8 @@ public class Venta extends javax.swing.JFrame {
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        controladorHorario = new ControladorHorario();
     }
 
     /**
@@ -35,7 +58,6 @@ public class Venta extends javax.swing.JFrame {
         name_consulta = new javax.swing.JLabel();
         cerrar = new javax.swing.JLabel();
         minimizar = new javax.swing.JLabel();
-        regresar = new javax.swing.JLabel();
         Errores = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,7 +71,7 @@ public class Venta extends javax.swing.JFrame {
 
         VentaPieza.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         VentaPieza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_pieza.png"))); // NOI18N
-        VentaPieza.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        VentaPieza.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         VentaPieza.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 VentaPiezaMouseMoved(evt);
@@ -67,7 +89,7 @@ public class Venta extends javax.swing.JFrame {
 
         VentaLista.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         VentaLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_lista.png"))); // NOI18N
-        VentaLista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        VentaLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         VentaLista.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 VentaListaMouseMoved(evt);
@@ -97,7 +119,7 @@ public class Venta extends javax.swing.JFrame {
 
         cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Multiply_32px.png"))); // NOI18N
-        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cerrarMouseClicked(evt);
@@ -107,18 +129,13 @@ public class Venta extends javax.swing.JFrame {
 
         minimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Expand_Arrow_32px.png"))); // NOI18N
-        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         minimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 minimizarMouseClicked(evt);
             }
         });
         CompraFondo.add(minimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, 30));
-
-        regresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
-        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        CompraFondo.add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, -1, 30));
         CompraFondo.add(Errores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 1020, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,20 +163,22 @@ public class Venta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VentaPiezaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaPiezaMouseMoved
-        VentaPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        VentaPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_VentaPiezaMouseMoved
 
     private void VentaPiezaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaPiezaMouseClicked
+        this.dispose();
+        VentaPiezaFrame.info = info;
         VentaPiezaFrame venta = new VentaPiezaFrame();
         venta.setVisible(true);
     }//GEN-LAST:event_VentaPiezaMouseClicked
 
     private void VentaPiezaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaPiezaMouseExited
-        VentaPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        VentaPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_VentaPiezaMouseExited
 
     private void VentaListaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaListaMouseMoved
-        VentaLista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        VentaLista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_VentaListaMouseMoved
 
     private void VentaListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaListaMouseClicked
@@ -169,12 +188,62 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_VentaListaMouseClicked
 
     private void VentaListaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaListaMouseExited
-        VentaLista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        VentaLista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_VentaListaMouseExited
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
+        Horario horario = controladorHorario.obtenerHorario(info.getIdHorario());
 
-        System.exit(0);
+        if (horario != null) {
+            Calendar calendario = Calendar.getInstance();
+            String horaActual = calendario.get(Calendar.HOUR_OF_DAY) + ":" + calendario.get(Calendar.MINUTE) + ":" + calendario.get(Calendar.SECOND);
+
+            try {
+                DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+
+                Date DHoraSalida = dateFormat.parse(horario.getSalida());
+                Date DHoraActual = dateFormat.parse(horaActual);
+
+                if (DHoraSalida.compareTo(DHoraActual) > 0) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Tu hora de salida es: " + horario.getSalida() + ". Estas seguro que deseas salir? (se te contara como inasistencia)", "Cerrando Sesion", JOptionPane.YES_NO_OPTION);
+                    if (respuesta == 0) {
+                        try {
+                            Inasistencia inasistencia = new Inasistencia();
+                            inasistencia.setIdEmpleado(info.getIdEmpleado());
+                            inasistencia.setIdTipoInasistencia(2);
+
+                            MySQLInasistencia myinasistencia = new MySQLInasistencia();
+                            myinasistencia.insertar(inasistencia);
+
+                            MySQLAsistencia myasistencia = new MySQLAsistencia();
+                            Asistencia aux = myasistencia.obtenerIdyFecha(info.getIdEmpleado());
+                            aux.setHora_salida(horaActual);
+                            myasistencia.modificar(aux);
+                            JOptionPane.showMessageDialog(null, "Cerro Sesion correctamente");
+                            dispose();
+                            Login login = new Login();
+                            login.setVisible(true);
+                        } catch (Excepcion e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            System.exit(0);
+                        }
+                    }
+                } else {
+                    MySQLAsistencia myasistencia = new MySQLAsistencia();
+                    Asistencia aux = myasistencia.obtenerIdyFecha(info.getIdEmpleado());
+                    aux.setHora_salida(horaActual);
+                    myasistencia.modificar(aux);
+                    JOptionPane.showMessageDialog(null, "Cerro Sesion correctamente");
+                    dispose();
+                    Login login = new Login();
+                    login.setVisible(true);
+                }
+
+            } catch (ParseException ex) {
+                Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -225,6 +294,5 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel minimizar;
     private javax.swing.JLabel name_consulta;
     private javax.swing.JLabel name_pieza;
-    private javax.swing.JLabel regresar;
     // End of variables declaration//GEN-END:variables
 }

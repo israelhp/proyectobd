@@ -234,6 +234,8 @@ public class General extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Inventario inv = new Inventario();
+        inv.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
 

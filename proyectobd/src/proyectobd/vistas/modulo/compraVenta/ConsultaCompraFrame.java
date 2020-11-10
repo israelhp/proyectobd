@@ -452,7 +452,9 @@ public class ConsultaCompraFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        Compra compra = new Compra();
+        compra.setVisible(true);
+        dispose(); // regresar
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void MesMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MesMinActionPerformed

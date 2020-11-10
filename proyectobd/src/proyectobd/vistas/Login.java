@@ -25,6 +25,7 @@ import proyectobd.modelos.Asistencia;
 import proyectobd.modelos.Empleado;
 import proyectobd.modelos.Horario;
 import proyectobd.modelos.Inasistencia;
+import proyectobd.vistas.modulo.compraVenta.Venta;
 
 /**
  *
@@ -60,7 +61,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPIngreso = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -99,10 +99,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 30, 50));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Menu_32px.png"))); // NOI18N
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 50));
 
@@ -252,6 +248,10 @@ public class Login extends javax.swing.JFrame {
                         }
                         switch (this.empleado.getIdPuesto()) {
                             case 1: // Vendedor
+                                this.dispose();
+                                Venta.info = this.empleado;
+                                Venta venta = new Venta();
+                                venta.setVisible(true);
                                 break;
                             case 2: // Supervisor
                             case 3: //Jefe
@@ -355,7 +355,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField jPFContra;

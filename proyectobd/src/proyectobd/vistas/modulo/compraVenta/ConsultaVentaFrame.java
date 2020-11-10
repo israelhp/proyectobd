@@ -415,9 +415,10 @@ public class ConsultaVentaFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
+        dispose(); 
         Venta venta = new Venta();
         venta.setVisible(true);
-        dispose(); // regresar
+        // regresar
     }//GEN-LAST:event_regresarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -425,7 +426,9 @@ public class ConsultaVentaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        dispose();
+        Venta venta = new Venta();
+        venta.setVisible(true);
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void MesMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MesMinActionPerformed

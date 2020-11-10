@@ -89,6 +89,7 @@ import proyectobd.modelos.TipoInasistencia;
 import proyectobd.modelos.TipoPago;
 import proyectobd.modelos.TipoTransaccion;
 import proyectobd.modelos.Vacaciones;
+import proyectobd.vistas.modulo.compraVenta.Compra;
 
 import proyectobd.vistas.modulo.empleados.Consultar;
 import proyectobd.vistas.modulo.empleados.IngresoEmpleado;
@@ -105,7 +106,7 @@ import proyectobd.vistas.modulo.equipos.ModificarEquip;
  *
  * @author israe
  */
-public class vistaprueba {
+public class test {
 
     public static void main(String args[]) throws ParseException {
         Login login = new Login();

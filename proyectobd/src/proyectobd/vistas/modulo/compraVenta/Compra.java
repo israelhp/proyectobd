@@ -7,6 +7,8 @@ package proyectobd.vistas.modulo.compraVenta;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import proyectobd.modelos.Empleado;
+import proyectobd.vistas.Admin;
 import proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame;
 
 /**
@@ -14,6 +16,9 @@ import proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame;
  * @author ricar
  */
 public class Compra extends javax.swing.JFrame {
+
+    public static Empleado info;
+    public static String regreso;
 
     /**
      * Creates new form Compra
@@ -58,7 +63,7 @@ public class Compra extends javax.swing.JFrame {
 
         compraPieza.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         compraPieza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_pieza.png"))); // NOI18N
-        compraPieza.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        compraPieza.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         compraPieza.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 compraPiezaMouseMoved(evt);
@@ -76,7 +81,7 @@ public class Compra extends javax.swing.JFrame {
 
         compraObjeto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         compraObjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_objeto.png"))); // NOI18N
-        compraObjeto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        compraObjeto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         compraObjeto.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 compraObjetoMouseMoved(evt);
@@ -94,7 +99,7 @@ public class Compra extends javax.swing.JFrame {
 
         compraServicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         compraServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_servicio.png"))); // NOI18N
-        compraServicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        compraServicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         compraServicio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 compraServicioMouseMoved(evt);
@@ -112,7 +117,7 @@ public class Compra extends javax.swing.JFrame {
 
         compraConsulta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         compraConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_lista.png"))); // NOI18N
-        compraConsulta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        compraConsulta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         compraConsulta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 compraConsultaMouseMoved(evt);
@@ -154,7 +159,7 @@ public class Compra extends javax.swing.JFrame {
 
         cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Multiply_32px.png"))); // NOI18N
-        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cerrarMouseClicked(evt);
@@ -164,7 +169,7 @@ public class Compra extends javax.swing.JFrame {
 
         minimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Expand_Arrow_32px.png"))); // NOI18N
-        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         minimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 minimizarMouseClicked(evt);
@@ -174,7 +179,12 @@ public class Compra extends javax.swing.JFrame {
 
         regresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
-        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        regresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                regresarMouseClicked(evt);
+            }
+        });
         CompraFondo.add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, -1, 30));
         CompraFondo.add(Errores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 1020, 20));
 
@@ -184,12 +194,9 @@ public class Compra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        /*int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null,"Desea salir?","Exit",dialog);
-        if(result == 0){
-            System.exit(0);
-        } POR SI QUIERO PREGUNTAR SI DESEA SALIR*/ 
-        System.exit(0);
+        this.dispose();
+        Admin modAdmin = new Admin(this.info);
+        modAdmin.setVisible(true);
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -197,50 +204,53 @@ public class Compra extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void compraPiezaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraPiezaMouseMoved
-        compraPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        compraPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_compraPiezaMouseMoved
 
     private void compraPiezaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraPiezaMouseExited
-        compraPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        compraPieza.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_compraPiezaMouseExited
 
     private void compraObjetoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraObjetoMouseMoved
-        compraObjeto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        compraObjeto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_compraObjetoMouseMoved
 
     private void compraServicioMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraServicioMouseMoved
-        compraServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        compraServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_compraServicioMouseMoved
 
     private void compraConsultaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraConsultaMouseMoved
-        compraConsulta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        compraConsulta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_compraConsultaMouseMoved
 
     private void compraObjetoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraObjetoMouseExited
-        compraObjeto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        compraObjeto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_compraObjetoMouseExited
 
     private void compraServicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraServicioMouseExited
-        compraServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        compraServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_compraServicioMouseExited
 
     private void compraConsultaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraConsultaMouseExited
-        compraConsulta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        compraConsulta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_compraConsultaMouseExited
 
     private void compraPiezaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraPiezaMouseClicked
+        CompraPiezaFrame.info = this.info;
         CompraPiezaFrame pieza = new CompraPiezaFrame();
         pieza.setVisible(true);
         dispose();
     }//GEN-LAST:event_compraPiezaMouseClicked
 
     private void compraObjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraObjetoMouseClicked
+        CompraObjetoFrame.info = this.info;
         CompraObjetoFrame objeto = new CompraObjetoFrame();
         objeto.setVisible(true);
         dispose();
     }//GEN-LAST:event_compraObjetoMouseClicked
 
     private void compraServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compraServicioMouseClicked
+        CompraServicioFrame.info = info;
         CompraServicioFrame servicio = new CompraServicioFrame();
         servicio.setVisible(true);
         dispose();
@@ -251,6 +261,12 @@ public class Compra extends javax.swing.JFrame {
         consultaCompra.setVisible(true);
         dispose();
     }//GEN-LAST:event_compraConsultaMouseClicked
+
+    private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
+        this.dispose();
+        Admin modAdmin = new Admin(this.info);
+        modAdmin.setVisible(true);
+    }//GEN-LAST:event_regresarMouseClicked
 
     /**
      * @param args the command line arguments

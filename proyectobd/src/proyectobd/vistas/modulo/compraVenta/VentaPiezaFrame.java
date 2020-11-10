@@ -7,6 +7,7 @@ package proyectobd.vistas.modulo.compraVenta;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import proyectobd.controladores.ControladorPersona;
 import proyectobd.dao.mysql.MySQLDetalleFacturaVenta;
 import proyectobd.dao.mysql.MySQLEmpresa;
 import proyectobd.dao.mysql.MySQLFacturaGeneral;
@@ -15,6 +16,7 @@ import proyectobd.dao.mysql.MySQLMovimientoFinanciero;
 import proyectobd.dao.mysql.MySQLPersona;
 import proyectobd.dao.mysql.MySQLTipoPago;
 import proyectobd.modelos.DetalleFacturaVenta;
+import proyectobd.modelos.Empleado;
 import proyectobd.modelos.Empresa;
 import proyectobd.modelos.FacturaGeneral;
 import proyectobd.modelos.FacturaVenta;
@@ -28,31 +30,36 @@ import proyectobd.modelos.TipoPago;
  */
 public class VentaPiezaFrame extends javax.swing.JFrame {
 
+    public static Empleado info;
+
     /**
      * Creates new form VentaPiezaFrame
      */
     public VentaPiezaFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        this.empleado.setText(new ControladorPersona().obtenerPorID(info.getIdPersona()).getNombre());
+
+        this.idEmpleado.setText(String.valueOf(info.getIdEmpleado()));
+
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH) + 1;
         int dia = c.get(Calendar.DAY_OF_MONTH);
         int año = c.get(Calendar.YEAR);
         String fecha = dia + "/" + mes + "/" + año;
         this.fecha.setText(fecha.toString());
-        
-        
+
         MySQLEmpresa aux3 = new MySQLEmpresa();
         MySQLTipoPago aux4 = new MySQLTipoPago();
-        
 
-        ArrayList <Empresa> listaEmpresa = aux3.listar();
-        ArrayList <TipoPago> listaTipoPago = aux4.listar();
-       
-        for(int i = 0; i<listaEmpresa.size();i++){
+        ArrayList<Empresa> listaEmpresa = aux3.listar();
+        ArrayList<TipoPago> listaTipoPago = aux4.listar();
+
+        for (int i = 0; i < listaEmpresa.size(); i++) {
             empresa.addItem(listaEmpresa.get(i).getNombre());
         }
-        for(int i = 0; i<listaTipoPago.size();i++){
+        for (int i = 0; i < listaTipoPago.size(); i++) {
             tipoPago.addItem(listaTipoPago.get(i).getTipo());
         }
     }
@@ -456,30 +463,30 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AgregarEmpresaActionPerformed
 
     private void agregarDetalleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseMoved
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_agregarDetalleMouseMoved
 
     private void agregarDetalleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseExited
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_agregarDetalleMouseExited
 
     private void agregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarDetalleActionPerformed
         boolean vacio = empresa.getSelectedIndex() == 0;
         Errores.setText("");
-        if(!vacio){
+        if (!vacio) {
             DetalleVentaPieza detalle = new DetalleVentaPieza();
             detalle.setVisible(true);
-        }else{
+        } else {
             Errores.setText("No puede haber campos vacios.");
         }
     }//GEN-LAST:event_agregarDetalleActionPerformed
 
     private void realizarVentaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarVentaMouseMoved
-        realizarVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        realizarVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_realizarVentaMouseMoved
 
     private void realizarVentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarVentaMouseExited
-        realizarVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        realizarVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_realizarVentaMouseExited
 
     private void realizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarVentaActionPerformed
@@ -492,45 +499,44 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
         MySQLMovimientoFinanciero auxMovimientoFinanciero = new MySQLMovimientoFinanciero();
         MovimientoFinanciero nuevoMovimiento = new MovimientoFinanciero();
         MovimientoFinanciero ultimoMovimiento = new MovimientoFinanciero();
-        
+
         FacturaGeneral facturaGeneral = new FacturaGeneral();
         FacturaVenta facturaVenta = new FacturaVenta();
         DetalleFacturaVenta detalleFacturaVenta = new DetalleFacturaVenta();
-        
-        
+
         boolean ExistePersona = false;
         int IndexPersona = 0;
         int IndexEmpresa = 0;
         int IndexPago = 0;
         int IndexFacturaGeneral = 0;
         int IndexFacturaVenta = 0;
-        ArrayList <Persona> listaPersona = auxPersona.listar();
-        ArrayList <Empresa> listaEmpresa = auxEmpresa.listar();
-        ArrayList <TipoPago> listaTipoPago = auxTipoPago.listar();
-        ArrayList <FacturaGeneral> listaFacturaGeneral = auxFacturaGeneral.listar();
-        ArrayList <MovimientoFinanciero> listaMovimiento = auxMovimientoFinanciero.listar();
-        
-        for(int i = 0; i<listaMovimiento.size();i++){
+        ArrayList<Persona> listaPersona = auxPersona.listar();
+        ArrayList<Empresa> listaEmpresa = auxEmpresa.listar();
+        ArrayList<TipoPago> listaTipoPago = auxTipoPago.listar();
+        ArrayList<FacturaGeneral> listaFacturaGeneral = auxFacturaGeneral.listar();
+        ArrayList<MovimientoFinanciero> listaMovimiento = auxMovimientoFinanciero.listar();
+
+        for (int i = 0; i < listaMovimiento.size(); i++) {
             ultimoMovimiento = listaMovimiento.get(i);
         }
-        
+
         Persona persona = new Persona();
-        
+
         boolean v1 = Nombre.getText().equals("");
         boolean v2 = Apellido.getText().equals("");
         boolean v3 = Direccion.getText().equals("");
         boolean v4 = DPI.getText().equals("");
         boolean v5 = Nit.getText().equals("");
         boolean v6 = tipoPago.getSelectedIndex() == 0;
-        
-        if(!v1 && !v2 && !v3 && !v4 && !v5 && !v6){
-            for(int i = 0;i<listaPersona.size();i++){
-                if(Nit.getText().equals(listaPersona.get(i).getNit())){
+
+        if (!v1 && !v2 && !v3 && !v4 && !v5 && !v6) {
+            for (int i = 0; i < listaPersona.size(); i++) {
+                if (Nit.getText().equals(listaPersona.get(i).getNit())) {
                     ExistePersona = true;
                     IndexPersona = listaPersona.get(i).getIdPersona();
                 }
             }
-            if(!ExistePersona){
+            if (!ExistePersona) {
                 persona.setApellido(Apellido.getText());
                 persona.setDireccion(Direccion.getText());
                 persona.setDpi(DPI.getText());
@@ -539,33 +545,33 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
                 auxPersona.insertar(persona);
                 IndexPersona = listaPersona.size() + 1;
             }
-            
-            for(int i = 0;i<listaEmpresa.size();i++){
-                if(listaEmpresa.get(i).getNombre().equals(empresa.getSelectedItem())){
+
+            for (int i = 0; i < listaEmpresa.size(); i++) {
+                if (listaEmpresa.get(i).getNombre().equals(empresa.getSelectedItem())) {
                     IndexEmpresa = listaEmpresa.get(i).getIdEmpresa();
                 }
             }
-            for(int i = 0;i<listaTipoPago.size();i++){
-                if(listaTipoPago.get(i).getTipo().equals(tipoPago.getSelectedItem())){
+            for (int i = 0; i < listaTipoPago.size(); i++) {
+                if (listaTipoPago.get(i).getTipo().equals(tipoPago.getSelectedItem())) {
                     IndexPago = listaTipoPago.get(i).getIdTipoPago();
                 }
             }
-            
+
             facturaGeneral.setTotal(DetalleVentaPieza.total);
             facturaGeneral.setIdEmpleado(Integer.parseInt(idEmpleado.getText()));
             facturaGeneral.setIdEmpresa(IndexEmpresa);
             facturaGeneral.setIdTipoFactura(1);
             facturaGeneral.setIdTipoPago(IndexPago);
             auxFacturaGeneral.insertar(facturaGeneral);
-            
+
             listaFacturaGeneral = auxFacturaGeneral.listar();
-            
-            for(int i = 0;i<listaFacturaGeneral.size();i++){
-                if(listaFacturaGeneral.get(i).getTotal() == (facturaGeneral.getTotal())){
-                    if(listaFacturaGeneral.get(i).getIdEmpresa() == (facturaGeneral.getIdEmpresa())){
-                        if(listaFacturaGeneral.get(i).getIdTipoFactura() == (facturaGeneral.getIdTipoFactura())){
-                            if(listaFacturaGeneral.get(i).getIdEmpleado() == (facturaGeneral.getIdEmpleado())){
-                                if(listaFacturaGeneral.get(i).getIdTipoPago() == (facturaGeneral.getIdTipoPago())){
+
+            for (int i = 0; i < listaFacturaGeneral.size(); i++) {
+                if (listaFacturaGeneral.get(i).getTotal() == (facturaGeneral.getTotal())) {
+                    if (listaFacturaGeneral.get(i).getIdEmpresa() == (facturaGeneral.getIdEmpresa())) {
+                        if (listaFacturaGeneral.get(i).getIdTipoFactura() == (facturaGeneral.getIdTipoFactura())) {
+                            if (listaFacturaGeneral.get(i).getIdEmpleado() == (facturaGeneral.getIdEmpleado())) {
+                                if (listaFacturaGeneral.get(i).getIdTipoPago() == (facturaGeneral.getIdTipoPago())) {
                                     IndexFacturaGeneral = listaFacturaGeneral.get(i).getIdFacturaGeneral();
                                 }
                             }
@@ -576,32 +582,35 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
             facturaVenta.setIdPersona(IndexPersona);
             facturaVenta.setIdFacturaGeneral(IndexFacturaGeneral);
             auxFacturaVenta.insertar(facturaVenta);
-            
-            
-            ArrayList <FacturaVenta> listaFacturaVenta = auxFacturaVenta.listar();
-            
+
+            ArrayList<FacturaVenta> listaFacturaVenta = auxFacturaVenta.listar();
+
             IndexFacturaVenta = listaFacturaVenta.size();
-            
-            for(int i = 0; i< DetalleVentaPieza.listaDetalleFacturaVenta.size();i++){
+
+            for (int i = 0; i < DetalleVentaPieza.listaDetalleFacturaVenta.size(); i++) {
                 DetalleVentaPieza.listaDetalleFacturaVenta.get(i).setIdFacturaVenta(IndexFacturaVenta);
                 auxDetalleFacturaVenta.insertar(DetalleVentaPieza.listaDetalleFacturaVenta.get(i));
             }
-            
+
             nuevoMovimiento.setIdTipoTransaccion(1);
             nuevoMovimiento.setMonto(DetalleVentaPieza.total);
-            nuevoMovimiento.setTotal(ultimoMovimiento.getTotal()-nuevoMovimiento.getMonto());
+            nuevoMovimiento.setTotal(ultimoMovimiento.getTotal() - nuevoMovimiento.getMonto());
             auxMovimientoFinanciero.insertar(nuevoMovimiento);
             dispose();
             Venta venta = new Venta();
             venta.setVisible(true);
             venta.Errores.setText("VENTA EXITOSA");
-        }else{
+        } else {
             Errores.setText("No puede dejar espacios vacios");
         }
     }//GEN-LAST:event_realizarVentaActionPerformed
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        dispose(); // regresar // cerrar
+        VentaPiezaFrame.info = info;
+        Venta venta = new Venta();
+        venta.setVisible(true);
+
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -609,21 +618,23 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void regresar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresar2MouseClicked
+        dispose(); // regresar
+        VentaPiezaFrame.info = info;
         Venta venta = new Venta();
         venta.setVisible(true);
-        dispose(); // regresar
+
     }//GEN-LAST:event_regresar2MouseClicked
 
     private void NitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NitKeyTyped
-        
+
     }//GEN-LAST:event_NitKeyTyped
 
     private void NitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NitKeyPressed
         int indexPersona = 0;
         MySQLPersona auxPersona = new MySQLPersona();
-        ArrayList <Persona> listaPersona = auxPersona.listar();
-        for(int i = 0; i<listaPersona.size();i++){
-            if(Nit.getText().equals(listaPersona.get(i).getNit())){
+        ArrayList<Persona> listaPersona = auxPersona.listar();
+        for (int i = 0; i < listaPersona.size(); i++) {
+            if (Nit.getText().equals(listaPersona.get(i).getNit())) {
                 Nombre.setText(listaPersona.get(i).getNombre());
                 Apellido.setText(listaPersona.get(i).getApellido());
                 DPI.setText(listaPersona.get(i).getDpi());
@@ -634,7 +645,7 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_NitKeyPressed
 
     private void NitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NitFocusLost
-        
+
     }//GEN-LAST:event_NitFocusLost
 
     private void NombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NombreFocusLost
@@ -686,7 +697,7 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DireccionKeyTyped
 
     private void NitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NitKeyReleased
-        
+
     }//GEN-LAST:event_NitKeyReleased
 
     private void NitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NitActionPerformed

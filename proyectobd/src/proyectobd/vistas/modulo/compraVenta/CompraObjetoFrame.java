@@ -8,6 +8,7 @@ package proyectobd.vistas.modulo.compraVenta;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import proyectobd.controladores.ControladorPersona;
 import proyectobd.dao.mysql.MySQLDetalleFacturaCompra;
 import proyectobd.dao.mysql.MySQLDetalleFacturaProducto;
 import proyectobd.dao.mysql.MySQLEmpresa;
@@ -20,6 +21,7 @@ import proyectobd.dao.mysql.MySQLPieza;
 import proyectobd.dao.mysql.MySQLProducto;
 import proyectobd.dao.mysql.MySQLTipoFactura;
 import proyectobd.dao.mysql.MySQLTipoPago;
+import proyectobd.modelos.Empleado;
 import proyectobd.modelos.Empresa;
 import proyectobd.modelos.FacturaGeneral;
 import proyectobd.modelos.FacturaProducto;
@@ -29,6 +31,7 @@ import proyectobd.modelos.Producto;
 import proyectobd.modelos.TipoFactura;
 import proyectobd.modelos.TipoPago;
 import static proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame.empresa;
+import static proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame.info;
 import static proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame.tipoPago;
 
 /**
@@ -37,31 +40,35 @@ import static proyectobd.vistas.modulo.compraVenta.CompraPiezaFrame.tipoPago;
  */
 public class CompraObjetoFrame extends javax.swing.JFrame {
 
+    public static Empleado info;
+
     /**
      * Creates new form ComprarObjetoFrame
      */
     public CompraObjetoFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        this.empleado.setText(new ControladorPersona().obtenerPorID(info.getIdPersona()).getNombre());
+        this.idEmpleado.setText(String.valueOf(info.getIdEmpleado()));
+
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH) + 1;
         int dia = c.get(Calendar.DAY_OF_MONTH);
         int año = c.get(Calendar.YEAR);
         String fecha = dia + "/" + mes + "/" + año;
         this.fecha.setText(fecha.toString());
-        
-        
+
         MySQLEmpresa aux3 = new MySQLEmpresa();
         MySQLTipoPago aux4 = new MySQLTipoPago();
-        
 
-        ArrayList <Empresa> listaEmpresa = aux3.listar();
-        ArrayList <TipoPago> listaTipoPago = aux4.listar();
-       
-        for(int i = 0; i<listaEmpresa.size();i++){
+        ArrayList<Empresa> listaEmpresa = aux3.listar();
+        ArrayList<TipoPago> listaTipoPago = aux4.listar();
+
+        for (int i = 0; i < listaEmpresa.size(); i++) {
             empresa.addItem(listaEmpresa.get(i).getNombre());
         }
-        for(int i = 0; i<listaTipoPago.size();i++){
+        for (int i = 0; i < listaTipoPago.size(); i++) {
             tipoPago.addItem(listaTipoPago.get(i).getTipo());
         }
     }
@@ -293,9 +300,10 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
+        dispose(); // regresar
+        Compra.info = info;
         Compra compra = new Compra();
         compra.setVisible(true);
-        dispose(); // regresar
     }//GEN-LAST:event_regresarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -303,21 +311,24 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        dispose(); // regresar
+        Compra.info = info;
+        Compra compra = new Compra();
+        compra.setVisible(true);
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void realizarCompraMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarCompraMouseMoved
-        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_realizarCompraMouseMoved
 
     private void realizarCompraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarCompraMouseExited
-        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_realizarCompraMouseExited
 
     private void realizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarCompraActionPerformed
-        float saldo = (float)0.00;
+        float saldo = (float) 0.00;
         boolean productoExistente = false;
-        
+
         MySQLMovimientoFinanciero auxMovimientoFinanciero = new MySQLMovimientoFinanciero();
         MySQLFacturaGeneral auxFacturaGeneral = new MySQLFacturaGeneral();
         MySQLEmpresa auxEmpresa = new MySQLEmpresa();
@@ -327,46 +338,46 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
         MySQLProducto auxProducto = new MySQLProducto();
         MySQLDetalleFacturaProducto auxDetalleFacturaProducto = new MySQLDetalleFacturaProducto();
         MySQLInventarioGeneral auxInventarioGeneral = new MySQLInventarioGeneral();
-        
+
         ArrayList<Empresa> listaEmpresa = auxEmpresa.listar();
         ArrayList<TipoPago> listaTipoPago = auxTipoPago.listar();
         ArrayList<TipoFactura> listaTipoFactura = auxTipoFactura.listar();
         ArrayList<MovimientoFinanciero> listaMovimientoFinanciero = auxMovimientoFinanciero.listar();
         ArrayList<InventarioGeneral> listaInventarioGeneral = auxInventarioGeneral.listar();
-        
+
         MovimientoFinanciero movimientoFinanciero = new MovimientoFinanciero();
-        
-        for(int i = 0; i < listaMovimientoFinanciero.size();i++){
+
+        for (int i = 0; i < listaMovimientoFinanciero.size(); i++) {
             movimientoFinanciero = listaMovimientoFinanciero.get(i);
         }
-        
+
         saldo = movimientoFinanciero.getTotal();
-        
-        if((float)saldo > (float)DetalleProducto.total){
+
+        if ((float) saldo > (float) DetalleProducto.total) {
             Producto producto = new Producto();
             movimientoFinanciero = new MovimientoFinanciero();
             FacturaGeneral facturaGeneral = new FacturaGeneral();
             FacturaProducto facturaProducto = new FacturaProducto();
 
-            float total = (float)DetalleProducto.total;
+            float total = (float) DetalleProducto.total;
             Integer idEmpleado = Integer.parseInt(this.idEmpleado.getText());
             int idEmpresa = 0;
             int idTipoPago = 0;
             int idTipoFactura = 0;
             int idFacturaGeneral = 0;
             int idFacturaProducto = 0;
-            for(int i = 0; i<listaEmpresa.size();i++){
-                if(empresa.getSelectedItem().toString().equals(listaEmpresa.get(i).getNombre())){
+            for (int i = 0; i < listaEmpresa.size(); i++) {
+                if (empresa.getSelectedItem().toString().equals(listaEmpresa.get(i).getNombre())) {
                     idEmpresa = listaEmpresa.get(i).getIdEmpresa();
                 }
             }
-            for(int i = 0; i<listaTipoPago.size();i++){
-                if(tipoPago.getSelectedItem().toString().equals(listaTipoPago.get(i).getTipo())){
+            for (int i = 0; i < listaTipoPago.size(); i++) {
+                if (tipoPago.getSelectedItem().toString().equals(listaTipoPago.get(i).getTipo())) {
                     idTipoPago = listaTipoPago.get(i).getIdTipoPago();
                 }
             }
-            for(int i = 0; i<listaTipoFactura.size();i++){
-                if("PRODUCTO COMPRA".equals(listaTipoFactura.get(i).getTipo())){
+            for (int i = 0; i < listaTipoFactura.size(); i++) {
+                if ("PRODUCTO COMPRA".equals(listaTipoFactura.get(i).getTipo())) {
                     idTipoFactura = listaTipoFactura.get(i).getIdTipoFactura();
                 }
             }
@@ -377,7 +388,7 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
             facturaGeneral.setTotal(total);
             auxFacturaGeneral.insertar(facturaGeneral);
             ArrayList<FacturaGeneral> listaFacturaGeneral = auxFacturaGeneral.listar();
-            for(int i = 0; i<listaFacturaGeneral.size();i++){
+            for (int i = 0; i < listaFacturaGeneral.size(); i++) {
                 idFacturaGeneral = listaFacturaGeneral.get(i).getIdFacturaGeneral();
             }
             producto = auxProducto.obtenerId(DetalleProducto.listaDetalleFacturaProducto.get(0).getIdProducto());
@@ -385,23 +396,23 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
             facturaProducto.setIdFacturaGeneral(idFacturaGeneral);
             auxFacturaProducto.insertar(facturaProducto);
             ArrayList<FacturaProducto> listaFacturaProducto = auxFacturaProducto.listar();
-            for(int i = 0; i<listaFacturaProducto.size();i++){
+            for (int i = 0; i < listaFacturaProducto.size(); i++) {
                 idFacturaProducto = listaFacturaProducto.get(i).getIdFacturaProducto();
             }
-            for(int i = 0; i < DetalleProducto.listaDetalleFacturaProducto.size(); i++){
+            for (int i = 0; i < DetalleProducto.listaDetalleFacturaProducto.size(); i++) {
                 productoExistente = false;
                 DetalleProducto.listaDetalleFacturaProducto.get(i).setIdFacturaProducto(idFacturaProducto);
                 auxDetalleFacturaProducto.insertar(DetalleProducto.listaDetalleFacturaProducto.get(i));
                 listaInventarioGeneral = auxInventarioGeneral.listar();
                 InventarioGeneral inventarioGeneral = new InventarioGeneral();
-                for(int j = 0; j < listaInventarioGeneral.size(); j++){
-                    if(DetalleProducto.listaDetalleFacturaProducto.get(i).getIdProducto() == (listaInventarioGeneral.get(j).getIdProducto())){
+                for (int j = 0; j < listaInventarioGeneral.size(); j++) {
+                    if (DetalleProducto.listaDetalleFacturaProducto.get(i).getIdProducto() == (listaInventarioGeneral.get(j).getIdProducto())) {
                         listaInventarioGeneral.get(j).setCantidad(listaInventarioGeneral.get(j).getCantidad() + DetalleProducto.listaDetalleFacturaProducto.get(i).getCantidad());
                         auxInventarioGeneral.modificar(listaInventarioGeneral.get(j));
                         productoExistente = true;
                     }
                 }
-                if(!productoExistente){
+                if (!productoExistente) {
                     inventarioGeneral.setIdProducto(DetalleProducto.listaDetalleFacturaProducto.get(i).getIdProducto());
                     inventarioGeneral.setCantidad(DetalleProducto.listaDetalleFacturaProducto.get(i).getCantidad());
                     auxInventarioGeneral.insertar(inventarioGeneral);
@@ -411,12 +422,12 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
             Compra compra = new Compra();
             compra.setVisible(true);
             compra.Errores.setText("COMPRA EXITOSA");
-            
-            movimientoFinanciero.setMonto((float)DetalleProducto.total);
+
+            movimientoFinanciero.setMonto((float) DetalleProducto.total);
             movimientoFinanciero.setIdTipoTransaccion(2);
-            movimientoFinanciero.setTotal((float)saldo - (float)DetalleProducto.total);
-            auxMovimientoFinanciero.insertar(movimientoFinanciero); 
-        }else{
+            movimientoFinanciero.setTotal((float) saldo - (float) DetalleProducto.total);
+            auxMovimientoFinanciero.insertar(movimientoFinanciero);
+        } else {
             dispose();
             Compra compra = new Compra();
             compra.setVisible(true);
@@ -425,23 +436,23 @@ public class CompraObjetoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_realizarCompraActionPerformed
 
     private void agregarDetalleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseMoved
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_agregarDetalleMouseMoved
 
     private void agregarDetalleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseExited
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_agregarDetalleMouseExited
 
     private void agregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarDetalleActionPerformed
         boolean vacio1 = tipoPago.getSelectedIndex() == 0;
         boolean vacio2 = empresa.getSelectedIndex() == 0;
         Errores.setText("");
-        if(!vacio1 && !vacio2){
+        if (!vacio1 && !vacio2) {
             tipoPago.setEnabled(false);
             empresa.setEnabled(false);
             DetalleProducto detalle = new DetalleProducto();
             detalle.setVisible(true);
-        }else{
+        } else {
             Errores.setText("No puede haber campos vacios.");
         }
     }//GEN-LAST:event_agregarDetalleActionPerformed

@@ -242,11 +242,13 @@ public class Codigo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Inventario inv = new Inventario();
-        inv.setVisible(rootPaneCheckingEnabled);
+        inv.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        Inventario inv = new Inventario();
+        inv.setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 

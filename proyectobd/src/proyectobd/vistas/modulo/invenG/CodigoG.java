@@ -203,6 +203,8 @@ public class CodigoG extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        InventarioG inv = new InventarioG();
+        inv.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 

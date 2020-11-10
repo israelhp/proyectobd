@@ -284,6 +284,8 @@ public class NumPieza extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        Inventario inv = new Inventario();
+        inv.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 

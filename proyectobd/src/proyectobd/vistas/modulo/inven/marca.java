@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package proyectobd.vistas.modulo.inven;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +27,7 @@ import proyectobd.modelos.MarcaPieza;
 import proyectobd.modelos.NombrePieza;
 import proyectobd.modelos.Pieza;
 import proyectobd.modelos.Producto;
+
 public class marca extends javax.swing.JFrame {
 
     /**
@@ -39,18 +41,19 @@ public class marca extends javax.swing.JFrame {
     MySQLPieza pieza = new MySQLPieza();
     MySQLNombrePieza nom_pieza = new MySQLNombrePieza();
     MySQLEstadoPieza e_pieza = new MySQLEstadoPieza();
-    ArrayList <Carro> lista = carro.listar();
-    ArrayList <Pieza> lista2 = pieza.listar();
-    ArrayList <NombrePieza> lista3 = nom_pieza.listar();
+    ArrayList<Carro> lista = carro.listar();
+    ArrayList<Pieza> lista2 = pieza.listar();
+    ArrayList<NombrePieza> lista3 = nom_pieza.listar();
     List<Integer> list = new ArrayList<Integer>();
     List<String> lis = new ArrayList<String>();
     DefaultTableModel model = new DefaultTableModel();
     MySQLInventarioPieza inv_pieza = new MySQLInventarioPieza();
-    ArrayList <InventarioPieza> inv = inv_pieza.listar();
+    ArrayList<InventarioPieza> inv = inv_pieza.listar();
     String item;
     String item2;
-    int ref=0;
-    int o=0;
+    int ref = 0;
+    int o = 0;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,7 +199,7 @@ public class marca extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
-        
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -205,15 +208,15 @@ public class marca extends javax.swing.JFrame {
         int id_n;
         int id_e;
         int id_inv;
-        int dis=0;
+        int dis = 0;
         String nom;
         String linea;
         String modelo;
         String estado;
         float pre;
-        String temp="";
-        item = (String)jComboBox1.getSelectedItem();
-        if(ref==0){
+        String temp = "";
+        item = (String) jComboBox1.getSelectedItem();
+        if (ref == 0) {
             model.addColumn("Id");
             model.addColumn("Nombre");
             model.addColumn("Linea");
@@ -221,34 +224,34 @@ public class marca extends javax.swing.JFrame {
             model.addColumn("Estado");
             model.addColumn("Precio");
             model.addColumn("Disponibilidad");
-            ref=1;
+            ref = 1;
         }
-        for(int i=0; i<lista.size(); i++){
-            if(item.equals(lista.get(i).getMarca())){
-                list.add(carro.obtenerId(i+1).getIdCarro());
+        for (int i = 0; i < lista.size(); i++) {
+            if (item.equals(lista.get(i).getMarca())) {
+                list.add(carro.obtenerId(i + 1).getIdCarro());
             }
-        } 
-        for(int i=0;i<list.size();i++){
-            for(int j=0;j<lista2.size();j++){
-               id_p=lista2.get(j).getIdPieza();
-               id_n=lista2.get(j).getIdNombrePieza();
-               id_e=lista2.get(j).getIdEstadoPieza();
-               id_inv=inv.get(i).getIdInventarioPieza();
-               if(pieza.obtenerId(id_p).getIdCarro()==list.get(i)){
-                   nom=nom_pieza.obtenerId(id_n).getNombre();
-                   linea=carro.obtenerId(list.get(i)).getLinea();
-                   modelo=carro.obtenerId(list.get(i)).getModelo();
-                   estado=e_pieza.obtenerId(id_e).getEstado();
-                   pre=pieza.obtenerId(id_p).getPrecio_venta();
-                   for(int q=0;q<inv.size();q++){
-                    id_inv=inv.get(q).getIdPieza();
-                    if(id_inv==id_p){
-                        dis=inv.get(q).getCantidad();
+        }
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < lista2.size(); j++) {
+                id_p = lista2.get(j).getIdPieza();
+                id_n = lista2.get(j).getIdNombrePieza();
+                id_e = lista2.get(j).getIdEstadoPieza();
+                id_inv = inv.get(i).getIdInventarioPieza();
+                if (pieza.obtenerId(id_p).getIdCarro() == list.get(i)) {
+                    nom = nom_pieza.obtenerId(id_n).getNombre();
+                    linea = carro.obtenerId(list.get(i)).getLinea();
+                    modelo = carro.obtenerId(list.get(i)).getModelo();
+                    estado = e_pieza.obtenerId(id_e).getEstado();
+                    pre = pieza.obtenerId(id_p).getPrecio_venta();
+                    for (int q = 0; q < inv.size(); q++) {
+                        id_inv = inv.get(q).getIdPieza();
+                        if (id_inv == id_p) {
+                            dis = inv.get(q).getCantidad();
+                        }
                     }
-                   }
-                   model.addRow(new Object[]{id_p,nom,linea,modelo,estado,pre,dis});
-                   jLabel1.setText("MARCA: "+carro.obtenerId(list.get(i)).getMarca());
-               }
+                    model.addRow(new Object[]{id_p, nom, linea, modelo, estado, pre, dis});
+                    jLabel1.setText("MARCA: " + carro.obtenerId(list.get(i)).getMarca());
+                }
             }
         }
         jButton1.setVisible(false);
@@ -257,25 +260,24 @@ public class marca extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         jComboBox1.remove(this);
-        for(int i=0; i<lista.size(); i++){
-            if(i==0){
+        for (int i = 0; i < lista.size(); i++) {
+            if (i == 0) {
                 jComboBox1.addItem(lista.get(i).getMarca());
                 lis.add(lista.get(i).getMarca());
-            }
-            else{
-                for(int j=0; j<lis.size();j++){
+            } else {
+                for (int j = 0; j < lis.size(); j++) {
                     item2 = lista.get(i).getMarca();
-                    if(item2.equals(lis.get(j))){
-                        o=1;
+                    if (item2.equals(lis.get(j))) {
+                        o = 1;
                     }
                 }
-                if(o==0){
+                if (o == 0) {
                     jComboBox1.addItem(lista.get(i).getMarca());
                     lis.add(lista.get(i).getMarca());
                 }
             }
-            o=0;
-        } 
+            o = 0;
+        }
         jButton4.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -290,6 +292,8 @@ public class marca extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        Inventario inv = new Inventario();
+        inv.setVisible(rootPaneCheckingEnabled);
         dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -321,14 +325,13 @@ public class marca extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new marca().setVisible(true);
-                
+
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

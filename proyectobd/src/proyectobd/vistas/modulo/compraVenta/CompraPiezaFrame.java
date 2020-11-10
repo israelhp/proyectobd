@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import proyectobd.controladores.ControladorPersona;
 import proyectobd.dao.mysql.MySQLDetalleFacturaCompra;
 import proyectobd.dao.mysql.MySQLEmpresa;
 import proyectobd.dao.mysql.MySQLFacturaCompra;
@@ -20,6 +21,7 @@ import proyectobd.dao.mysql.MySQLPieza;
 import proyectobd.dao.mysql.MySQLProveedor;
 import proyectobd.dao.mysql.MySQLTipoFactura;
 import proyectobd.dao.mysql.MySQLTipoPago;
+import proyectobd.modelos.Empleado;
 import proyectobd.modelos.Empresa;
 import proyectobd.modelos.FacturaCompra;
 import proyectobd.modelos.FacturaGeneral;
@@ -40,13 +42,15 @@ import proyectobd.modelos.TipoPago;
 
 public class CompraPiezaFrame extends javax.swing.JFrame {
     public static int tipo = 0;
-
+    public static Empleado info;
     /**
      * Creates new form CompraPiezaFrame
      */
     public CompraPiezaFrame() {
         initComponents();    
         this.setLocationRelativeTo(null);
+        this.empleado.setText(new ControladorPersona().obtenerPorID(info.getIdPersona()).getNombre());
+        this.idEmpleado.setText(String.valueOf(info.getIdEmpleado()));
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH) + 1;
         int dia = c.get(Calendar.DAY_OF_MONTH);
@@ -311,7 +315,10 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_empresaActionPerformed
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        dispose(); // regresar
+        Compra.info = info;
+        Compra compra = new Compra();
+        compra.setVisible(true);
     }//GEN-LAST:event_cerrarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -319,9 +326,11 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
+        dispose(); // regresar
+        Compra.info = info;
         Compra compra = new Compra();
         compra.setVisible(true);
-        dispose(); // regresar
+        
     }//GEN-LAST:event_regresarMouseClicked
 
     private void agregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarDetalleActionPerformed

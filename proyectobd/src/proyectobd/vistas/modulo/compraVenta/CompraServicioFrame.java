@@ -7,12 +7,14 @@ package proyectobd.vistas.modulo.compraVenta;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import proyectobd.controladores.ControladorPersona;
 import proyectobd.dao.mysql.MySQLDetalleFacturaExtraordinaria;
 import proyectobd.dao.mysql.MySQLEmpresa;
 import proyectobd.dao.mysql.MySQLFacturaGeneral;
 import proyectobd.dao.mysql.MySQLMovimientoFinanciero;
 import proyectobd.dao.mysql.MySQLTipoFactura;
 import proyectobd.dao.mysql.MySQLTipoPago;
+import proyectobd.modelos.Empleado;
 import proyectobd.modelos.Empresa;
 import proyectobd.modelos.FacturaGeneral;
 import proyectobd.modelos.MovimientoFinanciero;
@@ -21,31 +23,35 @@ import proyectobd.modelos.TipoPago;
 
 public class CompraServicioFrame extends javax.swing.JFrame {
 
+    public static Empleado info;
+
     /**
      * Creates new form CompraServicioFrame
      */
     public CompraServicioFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        this.empleado.setText(new ControladorPersona().obtenerPorID(info.getIdPersona()).getNombre());
+        this.idEmpleado.setText(String.valueOf(info.getIdEmpleado()));
+        
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH) + 1;
         int dia = c.get(Calendar.DAY_OF_MONTH);
         int año = c.get(Calendar.YEAR);
         String fecha = dia + "/" + mes + "/" + año;
         this.fecha.setText(fecha.toString());
-        
-        
+
         MySQLEmpresa aux1 = new MySQLEmpresa();
         MySQLTipoPago aux2 = new MySQLTipoPago();
-        
 
-        ArrayList <Empresa> listaEmpresa = aux1.listar();
-        ArrayList <TipoPago> listaTipoPago = aux2.listar();
-       
-        for(int i = 0; i<listaEmpresa.size();i++){
+        ArrayList<Empresa> listaEmpresa = aux1.listar();
+        ArrayList<TipoPago> listaTipoPago = aux2.listar();
+
+        for (int i = 0; i < listaEmpresa.size(); i++) {
             empresa.addItem(listaEmpresa.get(i).getNombre());
         }
-        for(int i = 0; i<listaTipoPago.size();i++){
+        for (int i = 0; i < listaTipoPago.size(); i++) {
             tipoPago.addItem(listaTipoPago.get(i).getTipo());
         }
     }
@@ -278,53 +284,55 @@ public class CompraServicioFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void realizarCompraMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarCompraMouseMoved
-        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_realizarCompraMouseMoved
 
     private void realizarCompraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarCompraMouseExited
-        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        realizarCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_realizarCompraMouseExited
 
     private void realizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarCompraActionPerformed
-        float saldo = (float)0.00;
-        
+        float saldo = (float) 0.00;
+
         MySQLMovimientoFinanciero auxMovimientoFinanciero = new MySQLMovimientoFinanciero();
         MySQLFacturaGeneral auxFacturaGeneral = new MySQLFacturaGeneral();
         MySQLEmpresa auxEmpresa = new MySQLEmpresa();
         MySQLTipoPago auxTipoPago = new MySQLTipoPago();
-        MySQLTipoFactura auxTipoFactura = new MySQLTipoFactura();     
+        MySQLTipoFactura auxTipoFactura = new MySQLTipoFactura();
         MySQLDetalleFacturaExtraordinaria auxDetalleFacturaExtraordinaria = new MySQLDetalleFacturaExtraordinaria();
 
         ArrayList<Empresa> listaEmpresa = auxEmpresa.listar();
         ArrayList<TipoPago> listaTipoPago = auxTipoPago.listar();
         ArrayList<TipoFactura> listaTipoFactura = auxTipoFactura.listar();
         ArrayList<MovimientoFinanciero> listaMovimientoFinanciero = auxMovimientoFinanciero.listar();
-        
+
         MovimientoFinanciero movimientoFinanciero = new MovimientoFinanciero();
         FacturaGeneral facturaGeneral = new FacturaGeneral();
-        
-        for(int i = 0; i < listaMovimientoFinanciero.size();i++){movimientoFinanciero = listaMovimientoFinanciero.get(i);}
+
+        for (int i = 0; i < listaMovimientoFinanciero.size(); i++) {
+            movimientoFinanciero = listaMovimientoFinanciero.get(i);
+        }
         saldo = movimientoFinanciero.getTotal();
 
-        if((float)saldo > (float)DetalleServicio.total){
+        if ((float) saldo > (float) DetalleServicio.total) {
             Integer idEmpleado = Integer.parseInt(this.idEmpleado.getText());
             int idEmpresa = 0;
             int idTipoPago = 0;
             int idTipoFactura = 0;
             int idFacturaGeneral = 0;
             float total = DetalleServicio.total;
-            for(int i = 0; i<listaEmpresa.size();i++){
-                if(empresa.getSelectedItem().toString().equals(listaEmpresa.get(i).getNombre())){
+            for (int i = 0; i < listaEmpresa.size(); i++) {
+                if (empresa.getSelectedItem().toString().equals(listaEmpresa.get(i).getNombre())) {
                     idEmpresa = listaEmpresa.get(i).getIdEmpresa();
                 }
             }
-            for(int i = 0; i<listaTipoPago.size();i++){
-                if(tipoPago.getSelectedItem().toString().equals(listaTipoPago.get(i).getTipo())){
+            for (int i = 0; i < listaTipoPago.size(); i++) {
+                if (tipoPago.getSelectedItem().toString().equals(listaTipoPago.get(i).getTipo())) {
                     idTipoPago = listaTipoPago.get(i).getIdTipoPago();
                 }
             }
-            for(int i = 0; i<listaTipoFactura.size();i++){
-                if("EXTRAORDINARIA".equals(listaTipoFactura.get(i).getTipo())){
+            for (int i = 0; i < listaTipoFactura.size(); i++) {
+                if ("EXTRAORDINARIA".equals(listaTipoFactura.get(i).getTipo())) {
                     idTipoFactura = listaTipoFactura.get(i).getIdTipoFactura();
                 }
             }
@@ -337,10 +345,10 @@ public class CompraServicioFrame extends javax.swing.JFrame {
 
             ArrayList<FacturaGeneral> listaFacturaGeneral = auxFacturaGeneral.listar();
 
-            for(int i = 0; i<listaFacturaGeneral.size();i++){
+            for (int i = 0; i < listaFacturaGeneral.size(); i++) {
                 idFacturaGeneral = listaFacturaGeneral.get(i).getIdFacturaGeneral();
             }
-            for(int i = 0; i < DetalleServicio.listaDetalleFacturaExtraordinaria.size(); i++){
+            for (int i = 0; i < DetalleServicio.listaDetalleFacturaExtraordinaria.size(); i++) {
                 DetalleServicio.listaDetalleFacturaExtraordinaria.get(i).setIdFacturaGeneral(idFacturaGeneral);
                 auxDetalleFacturaExtraordinaria.insertar(DetalleServicio.listaDetalleFacturaExtraordinaria.get(i));
             }
@@ -349,11 +357,11 @@ public class CompraServicioFrame extends javax.swing.JFrame {
             compra.setVisible(true);
             compra.Errores.setText("COMPRA EXITOSA");
 
-            movimientoFinanciero.setMonto((float)DetalleServicio.total);
+            movimientoFinanciero.setMonto((float) DetalleServicio.total);
             movimientoFinanciero.setIdTipoTransaccion(2);
-            movimientoFinanciero.setTotal((float)saldo - (float)DetalleServicio.total);
-            auxMovimientoFinanciero.insertar(movimientoFinanciero);            
-        }else{
+            movimientoFinanciero.setTotal((float) saldo - (float) DetalleServicio.total);
+            auxMovimientoFinanciero.insertar(movimientoFinanciero);
+        } else {
             dispose();
             Compra compra = new Compra();
             compra.setVisible(true);
@@ -376,31 +384,32 @@ public class CompraServicioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AgregarEmpresaActionPerformed
 
     private void agregarDetalleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseMoved
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     }//GEN-LAST:event_agregarDetalleMouseMoved
 
     private void agregarDetalleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarDetalleMouseExited
-        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252,100,68)));
+        agregarDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68)));
     }//GEN-LAST:event_agregarDetalleMouseExited
 
     private void agregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarDetalleActionPerformed
         boolean vacio1 = tipoPago.getSelectedIndex() == 0;
         boolean vacio2 = empresa.getSelectedIndex() == 0;
         Errores.setText("");
-        if(!vacio1 && !vacio2){
+        if (!vacio1 && !vacio2) {
             tipoPago.setEnabled(false);
             empresa.setEnabled(false);
             DetalleServicio detalleServicio = new DetalleServicio();
             detalleServicio.setVisible(true);
-        }else{
+        } else {
             Errores.setText("No puede haber campos vacios.");
         }
     }//GEN-LAST:event_agregarDetalleActionPerformed
 
     private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
+        dispose(); // regresar
+        Compra.info = info;
         Compra compra = new Compra();
         compra.setVisible(true);
-        dispose(); // regresar
     }//GEN-LAST:event_regresarMouseClicked
 
     private void minimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizarMouseClicked
@@ -408,7 +417,10 @@ public class CompraServicioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizarMouseClicked
 
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
-        System.exit(0); // cerrar
+        dispose(); // regresar
+        Compra.info = info;
+        Compra compra = new Compra();
+        compra.setVisible(true);
     }//GEN-LAST:event_cerrarMouseClicked
 
     /**
