@@ -352,7 +352,7 @@ public class DetalleProducto extends javax.swing.JFrame {
         if(!vacio1 && !vacio2 && !vacio3 && !vacio4 && !vacio5){
             String nombre = Nombre.getText();
             int indexProveedor = 0;
-            double precio = Double.parseDouble(Precio.getText());
+            double precio = Double.parseDouble(Precio.getText().replace(",", "."));
             String descripcion = Descripcion.getText();
             int cantidad = (Integer)Cantidad.getValue();
             int indexProducto = 0;

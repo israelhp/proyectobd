@@ -34,13 +34,18 @@ import proyectobd.modelos.TipoPago;
  *
  * @author ricar
  */
+
+
+
+
 public class CompraPiezaFrame extends javax.swing.JFrame {
     public static int tipo = 0;
+
     /**
      * Creates new form CompraPiezaFrame
      */
     public CompraPiezaFrame() {
-        initComponents();
+        initComponents();    
         this.setLocationRelativeTo(null);
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH) + 1;
@@ -111,7 +116,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
 
         regresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
-        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         regresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 regresarMouseClicked(evt);
@@ -121,7 +126,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
 
         minimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Expand_Arrow_32px.png"))); // NOI18N
-        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         minimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 minimizarMouseClicked(evt);
@@ -131,7 +136,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
 
         cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Multiply_32px.png"))); // NOI18N
-        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cerrarMouseClicked(evt);
@@ -142,7 +147,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(252, 100, 68));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(252, 100, 68));
-        jLabel1.setText("VENTA DE PIEZAS");
+        jLabel1.setText("COMPRA DE PIEZAS");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, 30));
 
         jSeparator1.setForeground(new java.awt.Color(108, 108, 108));
@@ -156,7 +161,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
         agregarDetalle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         agregarDetalle.setText("AGREGAR DETALLE");
         agregarDetalle.setBorder(null);
-        agregarDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        agregarDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         agregarDetalle.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 agregarDetalleMouseMoved(evt);
@@ -250,7 +255,7 @@ public class CompraPiezaFrame extends javax.swing.JFrame {
         realizarVenta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         realizarVenta.setText("REALIZAR COMPRA");
         realizarVenta.setBorder(null);
-        realizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        realizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         realizarVenta.setEnabled(false);
         realizarVenta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {

@@ -277,7 +277,7 @@ public class DetalleServicio extends javax.swing.JFrame {
 
         if(!vacio1 && !vacio2 && !vacio3){
             String descripcion = Descripcion.getText();
-            double precio = Double.parseDouble(Precio.getText());
+            double precio = Double.parseDouble(Precio.getText().replace(",", "."));
             int cantidad = (Integer)Cantidad.getValue();
 
             nuevoDetalleExtra.setDescripcion(descripcion);

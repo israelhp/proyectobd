@@ -594,7 +594,7 @@ public class VentaPiezaFrame extends javax.swing.JFrame {
             dispose();
             Venta venta = new Venta();
             venta.setVisible(true);
-            venta.Errores.setText("COMPRA EXITOSA");
+            venta.Errores.setText("VENTA EXITOSA");
         }else{
             Errores.setText("No puede dejar espacios vacios");
         }

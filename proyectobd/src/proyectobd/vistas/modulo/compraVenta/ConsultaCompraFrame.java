@@ -579,12 +579,12 @@ public class ConsultaCompraFrame extends javax.swing.JFrame {
         if(MontoMin.getText().equals("")){
             montoMin = 0.00;
         }else{
-            montoMin = Double.parseDouble(MontoMin.getText());
+            montoMin = Double.parseDouble(MontoMin.getText().replace(",", "."));
         }
         if(MontoMax.getText().equals("")){
             montoMax = -1.00;
         }else{
-            montoMax = Double.parseDouble(MontoMax.getText());
+            montoMax = Double.parseDouble(MontoMax.getText().replace(",", "."));
         }
         if(IdEmpleado.getText().equals("")){
             idEmpleado = 0;

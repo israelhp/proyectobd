@@ -221,7 +221,7 @@ public class Detalle extends javax.swing.JFrame {
 
         cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Multiply_32px.png"))); // NOI18N
-        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cerrarMouseClicked(evt);
@@ -247,7 +247,7 @@ public class Detalle extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("TERMINAR");
         jButton1.setBorder(null);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jButton1MouseMoved(evt);
@@ -371,7 +371,7 @@ public class Detalle extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("AGREGAR");
         jButton2.setBorder(null);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jButton2MouseMoved(evt);
@@ -642,8 +642,8 @@ public class Detalle extends javax.swing.JFrame {
             ArrayList <Pieza> listaPieza = auxPieza.listar();
             Pieza nuevaPieza = new Pieza();
             nuevaPieza.setNumeroPieza(Integer.valueOf(NumeroPieza.getText()));
-            nuevaPieza.setPrecio_compra(Float.parseFloat(PrecioCompra.getText()));
-            nuevaPieza.setPrecio_venta(Float.parseFloat(PrecioVenta.getText()));
+            nuevaPieza.setPrecio_compra(Float.parseFloat(PrecioCompra.getText().replace(",", ".")));
+            nuevaPieza.setPrecio_venta(Float.parseFloat(PrecioVenta.getText().replace(",", ".")));
             nuevaPieza.setIdProveedor(indexProveedor);
             nuevaPieza.setIdNombrePieza(indexNombrePieza);
             nuevaPieza.setIdEstadoPieza(indexEstadoPieza);
@@ -695,7 +695,7 @@ public class Detalle extends javax.swing.JFrame {
             nuevoDetalle.setIdPieza(indexPieza);
             listaDetalleFacturaCompra.add(nuevoDetalle);
             TablaIDPieza = "" + indexPieza;
-            TablaPrecio = Double.parseDouble(PrecioCompra.getText());
+            TablaPrecio = Double.parseDouble(PrecioCompra.getText().replace(",", "."));
             TablaCantidad = (Integer)Cantidad.getValue(); 
             TablaSubtotal = TablaCantidad * TablaPrecio;
 
