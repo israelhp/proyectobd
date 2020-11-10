@@ -131,7 +131,7 @@ public class MySQLDetalleFacturaExtraordinaria implements DetalleFacturaExtraord
 
     private DetalleFacturaExtraordinaria parserDetalleFacturaExtraordinaria() throws SQLException {
         DetalleFacturaExtraordinaria detalleFacExtra = new DetalleFacturaExtraordinaria();
-        detalleFacExtra.setIdDetalleFacturaExtraordinaria(resultados.getInt("id_puesto"));
+        detalleFacExtra.setIdDetalleFacturaExtraordinaria(resultados.getInt("id_detalle_factura_extraordinaria"));
         detalleFacExtra.setCantidad(resultados.getInt("cantidad"));
         detalleFacExtra.setDescripcion(resultados.getString("descripcion"));
         detalleFacExtra.setIdFacturaGeneral(resultados.getInt("id_factura_general"));

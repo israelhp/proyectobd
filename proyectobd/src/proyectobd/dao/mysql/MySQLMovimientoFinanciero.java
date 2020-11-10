@@ -24,7 +24,7 @@ import proyectobd.modelos.MovimientoFinanciero;
  */
 public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
 
-    private final String INSERTAR = "INSERT INTO movimiento_financiero VALUES(default, ?,?,?,?);";
+    private final String INSERTAR = "INSERT INTO movimiento_financiero VALUES(default, ?,?,curdate(),?);";
     private final String MODIFICAR = "UPDATE  movimiento_financiero SET total = ?,  monto = ?, fecha = ?, id_tipo_transaccion = ?  WHERE id_movimiento_financiero = ? ;";
     private final String ELIMINAR = "DELETE FROM movimiento_financiero  WHERE movimiento_financiero = ?; ";
     private final String OBTENERPORID = "SELECT id_movimiento_financiero, total,monto,fecha,id_tipo_transaccion FROM movimiento_financiero WHERE id_movimiento_financiero = ?;";
@@ -42,9 +42,7 @@ public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
             sentencia = conexion.prepareStatement(INSERTAR);
             sentencia.setFloat(1, o.getTotal());
             sentencia.setFloat(2, o.getMonto());
-            Timestamp fecha = new Timestamp(o.getFecha().getTime());
-            sentencia.setTimestamp(3, fecha);
-            sentencia.setInt(4, o.getIdTipoTransaccion());
+            sentencia.setInt(3, o.getIdTipoTransaccion());
 
             if (sentencia.executeUpdate() == 0) {
                 throw new Excepcion("No se inserto el registro");
