@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectobd.vistas.modulo.inventario;
+package proyectobd.vistas.modulo.inven;
 
 /**
  *
  * @author emman
  */
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +16,7 @@ import proyectobd.dao.mysql.MySQLCarro;
 import proyectobd.dao.mysql.MySQLPieza;
 import proyectobd.dao.mysql.MySQLProducto;
 import proyectobd.dao.mysql.MySQLEstadoPieza;
+import proyectobd.dao.mysql.MySQLInventarioGeneral;
 import proyectobd.dao.mysql.MySQLInventarioPieza;
 import proyectobd.dao.mysql.MySQLMarcaPieza;
 import proyectobd.dao.mysql.MySQLNombrePieza;
@@ -26,20 +26,15 @@ import proyectobd.modelos.EstadoPieza;
 import proyectobd.modelos.FacturaCompra;
 import proyectobd.modelos.FacturaGeneral;
 import proyectobd.modelos.FacturaProducto;
+import proyectobd.modelos.InventarioGeneral;
 import proyectobd.modelos.InventarioPieza;
 import proyectobd.modelos.MarcaPieza;
 import proyectobd.modelos.NombrePieza;
 import proyectobd.modelos.Pieza;
 import proyectobd.modelos.Producto;
-public class Estado extends javax.swing.JFrame {
+import proyectobd.modelos.TipoFactura;
+public class General extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Estado
-     */
-    public Estado() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-    }
     MySQLCarro carro = new MySQLCarro();
     MySQLPieza pieza = new MySQLPieza();
     MySQLNombrePieza nom_pieza = new MySQLNombrePieza();
@@ -54,6 +49,11 @@ public class Estado extends javax.swing.JFrame {
     MySQLInventarioPieza inv_pieza = new MySQLInventarioPieza();
     ArrayList <InventarioPieza> inv = inv_pieza.listar();
     int ref=0;
+    public General() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,12 +64,11 @@ public class Estado extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -79,8 +78,42 @@ public class Estado extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(252, 100, 68));
+        jButton1.setText("BUSCAR");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68), 4));
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1403, 148, 95, -1));
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(252, 100, 68));
+        jButton2.setText("LIMPIAR");
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68), 4));
+        jButton2.setContentAreaFilled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1403, 229, 95, -1));
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(102, 102, 102));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1390, 0, 30, 50));
 
         jTable1.setForeground(new java.awt.Color(252, 100, 68));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -100,73 +133,25 @@ public class Estado extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "CODIGO", "NOMPRE DE LA PIEZA", "MARCA", "MARCA", "LINEA", "MODELO", "PRECIO", "DISPONIBILIDAD"
+                "CODIGO", "NOMBRE DE LA PIEZA", "MARCA", "MARCA", "LINEA", "MODELO", "PRECIO", "DISPONIBILIDAD"
             }
         ));
         jTable1.setGridColor(new java.awt.Color(252, 100, 68));
         jTable1.setSelectionBackground(new java.awt.Color(252, 100, 68));
         jTable1.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 1349, 239));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 133, 1364, 241));
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(102, 102, 102));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icon_regreso_32px.png"))); // NOI18N
-        jButton4.setContentAreaFilled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 0, 30, 50));
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(252, 100, 68));
-        jButton1.setText("NUEVO");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68), 4));
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 337, 78, 55));
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(252, 100, 68));
-        jButton2.setText("USADO");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68), 4));
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 337, 84, 55));
-
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(252, 100, 68));
-        jButton3.setText("LIMPIAR");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 100, 68), 4));
-        jButton3.setContentAreaFilled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 337, 90, 55));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectobd/vistas/imagenes/icons8_Expand_Arrow_32px.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 0, -1, 50));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 0, -1, 50));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -177,32 +162,27 @@ public class Estado extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 0, -1, 50));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 0, 29, 50));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 400));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1520, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jTable1.setModel(model);
-        String temp="";
-        String nom_p;
-        String marca_c;
-        String linea;
-        String modelo;
-        String marca_p;
-        String precio;
-        int id_n;
+        int id;
         int id_p;
         int id_c;
-        int id_m;
         int id_inv;
+        int id_mp;
         int dis=0;
-        int a= model.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {          
-            model.removeRow(model.getRowCount()-1);
-        }
+        float precio;
+        String nom;
+        String ma_pieza;
+        String m_c;
+        String c_li;
+        String modelo;
         if(ref==0){
             model.addColumn("CODIGO");
             model.addColumn("NOMBRE");
@@ -215,101 +195,47 @@ public class Estado extends javax.swing.JFrame {
             ref=1;
         }
         for(int i=0;i<lista2.size();i++){
-            if(lista2.get(i).getIdEstadoPieza()==1){
-               id_p=lista2.get(i).getIdPieza();
-               id_n=lista2.get(i).getIdNombrePieza();
-               id_c=lista2.get(i).getIdCarro();
-               id_m=lista2.get(i).getIdMarcaPieza();
-               nom_p=nom_pieza.obtenerId(id_n).getNombre();
-               marca_c=carro.obtenerId(id_c).getMarca();
-               linea=carro.obtenerId(id_c).getLinea();
-               modelo=carro.obtenerId(id_c).getModelo();
-               marca_p=m_pieza.obtenerId(id_m).getMarca();
-               precio=Float.toString(pieza.obtenerId(id_p).getPrecio_venta());
-               for(int j=0;j<inv.size();j++){
+            id=lista2.get(i).getIdPieza();
+            id_p=lista2.get(i).getIdNombrePieza();
+            id_mp=lista2.get(i).getIdMarcaPieza();
+            id_c=lista2.get(i).getIdCarro();
+            nom=nom_pieza.obtenerId(id_p).getNombre();
+            ma_pieza=m_pieza.obtenerId(id_mp).getMarca();
+            m_c=carro.obtenerId(id_c).getMarca();
+            c_li=carro.obtenerId(id_c).getLinea();
+            modelo=carro.obtenerId(id_c).getModelo();
+            precio=pieza.obtenerId(id).getPrecio_venta();
+            for(int j=0;j<inv.size();j++){
                 id_inv=inv.get(j).getIdPieza();
-                if(id_inv==id_p){
+                if(id_inv==id){
                     dis=inv.get(j).getCantidad();
                 }
-               }
-               model.addRow(new Object[]{id_p,nom_p,marca_p,marca_c,linea,modelo,precio,dis});
             }
+            model.addRow(new Object[]{id,nom,ma_pieza,m_c,c_li,modelo,precio,dis});
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int a= model.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {          
-            model.removeRow(model.getRowCount()-1);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jTable1.setModel(model);
-        String temp="";
-        String nom_p;
-        String marca_c;
-        String linea;
-        String modelo;
-        String marca_p;
-        String precio;
-        int id_n;
-        int id_p;
-        int id_c;
-        int id_m;
-        int id_inv;
-        int dis=0;
         int a= model.getRowCount()-1;
         for (int i = a; i >= 0; i--) {          
             model.removeRow(model.getRowCount()-1);
-        }
-        if(ref==0){
-            model.addColumn("CODIGO");
-            model.addColumn("NOMBRE");
-            model.addColumn("MARCA");
-            model.addColumn("MARCA");
-            model.addColumn("LINEA");
-            model.addColumn("MODELO");
-            model.addColumn("PRECIO");
-            model.addColumn("DISPONIBILIDAD");
-            ref=1;
-        }
-        for(int i=0;i<lista2.size();i++){
-            if(lista2.get(i).getIdEstadoPieza()==2){ 
-                id_p=lista2.get(i).getIdPieza();
-                id_n=lista2.get(i).getIdNombrePieza();
-                id_c=lista2.get(i).getIdCarro();
-                id_m=lista2.get(i).getIdMarcaPieza();
-                nom_p=nom_pieza.obtenerId(id_n).getNombre();
-                marca_c=carro.obtenerId(id_c).getMarca();
-                linea=carro.obtenerId(id_c).getLinea();
-                modelo=carro.obtenerId(id_c).getModelo();
-                marca_p=m_pieza.obtenerId(id_m).getMarca();
-                precio=Float.toString(pieza.obtenerId(id_p).getPrecio_venta());
-                for(int j=0;j<inv.size();j++){
-                id_inv=inv.get(j).getIdPieza();
-                if(id_inv==id_p){
-                    dis=inv.get(j).getCantidad();
-                }
-               }
-                model.addRow(new Object[]{id_p,nom_p,marca_p,marca_c,linea,modelo,precio,dis});
-            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Inventario inv = new Inventario();
         inv.setVisible(rootPaneCheckingEnabled);
         dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        this.setState(General.ICONIFIED);
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        this.setState(Estado.ICONIFIED);
-    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -328,20 +254,20 @@ public class Estado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Estado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(General.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Estado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(General.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Estado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(General.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Estado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(General.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Estado().setVisible(true);
+                new General().setVisible(true);
             }
         });
     }
@@ -350,11 +276,10 @@ public class Estado extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

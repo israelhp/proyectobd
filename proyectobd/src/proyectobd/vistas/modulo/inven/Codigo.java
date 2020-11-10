@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectobd.vistas.modulo.inventario;
+package proyectobd.vistas.modulo.inven;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import proyectobd.dao.mysql.MySQLCarro;
@@ -158,7 +158,7 @@ public class Codigo extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 0, -1, 50));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1520, 396));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1520, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

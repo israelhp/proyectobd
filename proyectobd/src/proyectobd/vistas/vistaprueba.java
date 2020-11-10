@@ -5,8 +5,8 @@
  */
 package proyectobd.vistas;
 
-import proyectobd.vistas.modulo.inventario.Inventario;
-import proyectobd.vistas.modulo.inventarioG.InventarioG;
+import proyectobd.vistas.modulo.inven.Inventario;
+import proyectobd.vistas.modulo.invenG.InventarioG;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,7 +109,7 @@ public class vistaprueba {
 
     public static void main(String args[]) throws ParseException {
         Login login = new Login();
-        login.setVisible(true);   
+        login.setVisible(true);
     }
 
 }
