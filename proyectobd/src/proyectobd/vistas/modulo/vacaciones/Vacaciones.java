@@ -455,13 +455,15 @@ public class Vacaciones extends javax.swing.JFrame {
         vacas.setIdEmpleado(auxEmpleado.getIdEmpleado());
         vacas.setFecha_salida(this.jDCFechaSalida.getDate());
 
-        if (this.jDCFechaSalida.getDate() != null) {
+        if (this.jDCFechaSalida.getDate() != null && this.jDCFechaEntrada.getDate() != null) {
             vacas.setFecha_entrada(this.jDCFechaEntrada.getDate());
             MySQLVacaciones mysql = new MySQLVacaciones();
             mysql.insertar(vacas);
 
             proyectobd.modelos.Vacaciones auxvacas = mysql.obtenerId(1);
             System.out.println(auxvacas.getFecha_entrada());
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingresa las dos fechas para realizar la operacion");
         }
 
 
