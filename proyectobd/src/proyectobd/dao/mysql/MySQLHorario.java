@@ -94,6 +94,7 @@ public class MySQLHorario implements HorarioDAO {
             conexion = new MySQLConexion().conectar();
             sentencia = conexion.prepareStatement(OBTENERPORID);
             sentencia.setInt(1, k);
+            
             resultados = sentencia.executeQuery();
             if (resultados.next()) {
                 puesto = parserHorario();

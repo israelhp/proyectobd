@@ -159,4 +159,24 @@ public class MySQLPago implements PagoDAO {
     public static java.util.Date obtenerDate(String fecha) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
     }
+    
+    public ArrayList<Pago> listarPagosDeEmpleado(Integer annio, Integer k) {
+        ArrayList<Pago> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("select * from pago WHERE year(fecha) = ? AND id_empleado = ?;");
+            sentencia.setInt(1, annio);
+            sentencia.setInt(2, k);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                Pago pago = parserPago();
+                lista.add(pago);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
 }

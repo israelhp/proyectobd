@@ -132,8 +132,6 @@ public class MySQLPersona implements PersonaDAO {
             resultados = sentencia.executeQuery();
             if (resultados.next()) {
                 persona = parserPersona();
-            } else {
-                throw new Excepcion("No se encontro el registro");
             }
         } catch (SQLException e) {
             throw new Excepcion(e.getMessage());

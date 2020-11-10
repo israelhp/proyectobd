@@ -97,8 +97,24 @@ public class MySQLDetalleEquipo implements DetalleEquipoDAO {
             resultados = sentencia.executeQuery();
             if (resultados.next()) {
                 detalleEquipo = parserDetalleEquipo();
-            } else {
-                throw new Excepcion("No se encontro el registro");
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return detalleEquipo;
+    }
+    
+    public DetalleEquipo obtenerIdEmpleado(Integer k) {
+        DetalleEquipo detalleEquipo = null;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT id_detalle_equipo, id_equipo, id_empleado FROM detalle_equipo WHERE id_empleado = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {
+                detalleEquipo = parserDetalleEquipo();
             }
         } catch (SQLException e) {
             throw new Excepcion(e.getMessage());
@@ -108,6 +124,42 @@ public class MySQLDetalleEquipo implements DetalleEquipoDAO {
         return detalleEquipo;
     }
 
+    public DetalleEquipo obtenerIdEquipo(Integer k) {
+        DetalleEquipo detalleEquipo = null;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT id_detalle_equipo, id_equipo, id_empleado FROM detalle_equipo WHERE id_equipo = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {
+                detalleEquipo = parserDetalleEquipo();
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return detalleEquipo;
+    }
+    
+    public ArrayList<DetalleEquipo> listarIdEquipo(Integer k) {
+        ArrayList<DetalleEquipo> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT id_detalle_equipo, id_equipo, id_empleado FROM detalle_equipo WHERE id_equipo = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                DetalleEquipo detalleEquipo = parserDetalleEquipo();
+                lista.add(detalleEquipo);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
     @Override
     public ArrayList<DetalleEquipo> listar() {
         ArrayList<DetalleEquipo> lista = new ArrayList();

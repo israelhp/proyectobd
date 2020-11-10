@@ -104,9 +104,45 @@ public class MySQLInasistencia implements InasistenciaDAO {
             resultados = sentencia.executeQuery();
             if (resultados.next()) {
                 inasistencia = parserInasistencia();
-            } else {
-                throw new Excepcion("No se encontro el registro");
-            }
+            } 
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return inasistencia;
+    }
+    
+    public int numeroInasistencias(Integer mes, Integer anio, Integer id) {
+        int num = 0;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT count(id_inasistencia) FROM inasistencia WHERE month(fecha) = ? AND year(fecha) = ?  AND id_empleado = ?;");
+            sentencia.setInt(1, mes);
+            sentencia.setInt(2, anio);
+            sentencia.setInt(3, id);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {
+                num = resultados.getInt(1);
+            } 
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return num;
+    }
+    
+    public Inasistencia obtenerIdyporFecha(Integer k) {
+        Inasistencia inasistencia = null;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("select * from inasistencia where id_empleado = ? and fecha = curdate();");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {
+                inasistencia = parserInasistencia();
+            } 
         } catch (SQLException e) {
             throw new Excepcion(e.getMessage());
         } finally {

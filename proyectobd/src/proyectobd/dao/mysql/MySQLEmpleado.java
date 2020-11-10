@@ -24,12 +24,13 @@ import proyectobd.modelos.Empleado;
  */
 public class MySQLEmpleado implements EmpleadoDAO {
 
-    private final String INSERTAR = "INSERT INTO empleado (id_empleado,contrasenia,fecha_inicio,id_persona,id_puesto,id_horario)VALUES (default,md5(?),curdate(),?,?,?);";
+    private final String INSERTAR = "INSERT INTO empleado (id_empleado,contrasenia,fecha_inicio,id_persona,id_puesto,id_horario)VALUES (default,md5(?),?,?,?,?);";
     private final String MODIFICAR = "UPDATE empleado SET contrasenia = md5(?), fecha_inicio = ?, fecha_fin = ?, id_puesto = ?, id_horario = ? WHERE id_empleado = ?;";
     private final String ELIMINAR = "DELETE FROM empleado WHERE id_empleado = ?";
     private final String OBTENERPORID = "SELECT id_empleado,contrasenia,fecha_inicio, fecha_fin, id_persona, id_puesto,id_horario FROM empleado WHERE id_empleado = ?;";
     private final String OBTENER = "SELECT id_empleado,contrasenia,fecha_inicio, fecha_fin, id_persona, id_puesto,id_horario FROM empleado;";
-
+    private final String LOGIN = "select id_empleado,contrasenia,fecha_inicio, fecha_fin, id_persona, id_puesto,id_horario from empleado WHERE contrasenia = md5(?) and id_empleado = ?";
+    
     private Connection conexion;
     private PreparedStatement sentencia;
     private ResultSet resultados;
@@ -41,9 +42,13 @@ public class MySQLEmpleado implements EmpleadoDAO {
 
             sentencia = conexion.prepareStatement(INSERTAR);
             sentencia.setString(1, o.getContrasenia());
-            sentencia.setInt(2, o.getIdPersona());
-            sentencia.setInt(3, o.getIdPuesto());
-            sentencia.setInt(4, o.getIdHorario());
+            
+            Timestamp fecha_inicio = new Timestamp(o.getFecha_inico().getTime());
+            sentencia.setTimestamp(2, fecha_inicio);
+            
+            sentencia.setInt(3, o.getIdPersona());
+            sentencia.setInt(4, o.getIdPuesto());
+            sentencia.setInt(5, o.getIdHorario());
 
             if (sentencia.executeUpdate() == 0) {
                 throw new Excepcion("No se inserto el registro");
@@ -83,6 +88,34 @@ public class MySQLEmpleado implements EmpleadoDAO {
             cerrarConexiones();
         }
     }
+    public void modificar(Empleado o, String consulta) {
+        consulta = "UPDATE empleado SET fecha_inicio = ?, fecha_fin = ?, id_puesto = ?, id_horario = ? WHERE id_empleado = ?;";
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement(consulta);
+            Timestamp fecha_inicio = new Timestamp(o.getFecha_inico().getTime());
+            sentencia.setTimestamp(1, fecha_inicio);
+
+            Timestamp fecha_fin = null;
+            if (o.getFecha_fin() != null) {
+                fecha_fin = new Timestamp(o.getFecha_fin().getTime());
+            }
+
+            sentencia.setTimestamp(2, fecha_fin);
+            sentencia.setInt(3, o.getIdPuesto());
+            sentencia.setInt(4, o.getIdHorario());
+            sentencia.setInt(5, o.getIdEmpleado());
+
+            if (sentencia.executeUpdate() == 0) {
+                throw new Excepcion("No se modifico el registro ");
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+    }
+
 
     @Override
     public void eliminar(Integer k) {
@@ -110,10 +143,27 @@ public class MySQLEmpleado implements EmpleadoDAO {
             sentencia = conexion.prepareStatement(OBTENERPORID);
             sentencia.setInt(1, k);
             resultados = sentencia.executeQuery();
-            if (resultados.next()) {
+            if (resultados.next()) {    
                 empleado = parserEmpleado();
-            } else {
-                throw new Excepcion("No se encontro el registro");
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return empleado;
+    }
+    
+    public Empleado obtenerLogin(Integer k,String p) {
+        Empleado empleado = null;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement(LOGIN);
+            sentencia.setString(1,p);
+            sentencia.setInt(2, k);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {    
+                empleado = parserEmpleado();
             }
         } catch (SQLException e) {
             throw new Excepcion(e.getMessage());

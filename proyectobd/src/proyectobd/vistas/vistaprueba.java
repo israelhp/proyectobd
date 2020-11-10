@@ -87,6 +87,14 @@ import proyectobd.modelos.TipoInasistencia;
 import proyectobd.modelos.TipoPago;
 import proyectobd.modelos.TipoTransaccion;
 import proyectobd.modelos.Vacaciones;
+import proyectobd.vistas.modulo.empleados.Consultar;
+import proyectobd.vistas.modulo.empleados.IngresoEmpleado;
+import proyectobd.vistas.modulo.empleados.ModificarEmpleado;
+import proyectobd.vistas.modulo.empleados.ModuloEmpleados;
+import proyectobd.vistas.modulo.equipos.ConsultarEquip;
+import proyectobd.vistas.modulo.equipos.CrearEquip;
+import proyectobd.vistas.modulo.equipos.Equipos;
+import proyectobd.vistas.modulo.equipos.ModificarEquip;
 /**
  *
  * @author israe
@@ -94,29 +102,7 @@ import proyectobd.modelos.Vacaciones;
 public class vistaprueba {
 
     public static void main(String args[]) throws ParseException {
-       //ejemplo
-        MySQLMovimientoFinanciero nuevo = new MySQLMovimientoFinanciero();
-        
-        MovimientoFinanciero aux = new MovimientoFinanciero();
-        
-        aux.setIdMovimientoFinanciero(2);
-        aux.setTotal(0);
-        aux.setMonto(3900);
-        aux.setFecha(MySQLMovimientoFinanciero.obtenerDate("2020-11-30"));
-        aux.setIdTipoTransaccion(1);
-        
-        //nuevo.insertar(aux);
-        //nuevo.modificar(aux);
-        
-        aux = nuevo.obtenerId(1); 
-        
-        System.out.println("ID: "+aux.getIdMovimientoFinanciero()+" Nombre: "+ aux.getMonto());
-        
-        System.out.println("Lista:");
-        ArrayList<MovimientoFinanciero> lista = nuevo.listar();
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println("ID: "+ lista.get(i).getIdMovimientoFinanciero()+" Nombre: "+ lista.get(i).getMonto()+"Fecha:"+lista.get(i).getFecha());
-            System.out.println("Dia:" + lista.get(i).obtenerCalendar().get(Calendar.DATE) + "Mes: " + lista.get(i).obtenerCalendar().get(Calendar.MONTH) + "Año: " +lista.get(i).obtenerCalendar().get(Calendar.YEAR) );
-        }
+        Login login = new Login();
+        login.setVisible(true);
     }
 }

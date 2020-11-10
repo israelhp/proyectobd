@@ -172,4 +172,24 @@ public class MySQLFacturaGeneral implements FacturaGeneralDAO {
     public static java.util.Date obtenerDate(String fecha) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
     }
+    
+    public int listarComiciones(Integer mes, Integer anio, Integer id) {
+        int cantidad = 0;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT count(id_factura_general) as contador FROM factura_general WHERE month(fecha) = ? AND year(fecha) = ? AND id_tipo_pago = 1 AND id_empleado = ?;");
+            sentencia.setInt(1, mes);
+            sentencia.setInt(2, anio);
+            sentencia.setInt(3, id);
+            resultados = sentencia.executeQuery();
+            if(resultados.next()) {
+                cantidad = resultados.getInt("contador");
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return cantidad;
+    }
 }

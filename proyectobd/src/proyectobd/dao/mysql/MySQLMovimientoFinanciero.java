@@ -98,14 +98,14 @@ public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
 
     @Override
     public MovimientoFinanciero obtenerId(Integer k) {
-        MovimientoFinanciero  movimientoFinanciero = null;
+        MovimientoFinanciero movimientoFinanciero = null;
         try {
             conexion = new MySQLConexion().conectar();
             sentencia = conexion.prepareStatement(OBTENERPORID);
             sentencia.setInt(1, k);
             resultados = sentencia.executeQuery();
             if (resultados.next()) {
-                movimientoFinanciero = parserMovimientoFinanciero ();
+                movimientoFinanciero = parserMovimientoFinanciero();
             } else {
                 throw new Excepcion("No se encontro el registro");
             }
@@ -119,7 +119,7 @@ public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
 
     @Override
     public ArrayList<MovimientoFinanciero> listar() {
-        ArrayList<MovimientoFinanciero > lista = new ArrayList();
+        ArrayList<MovimientoFinanciero> lista = new ArrayList();
         try {
             conexion = new MySQLConexion().conectar();
             sentencia = conexion.prepareStatement(OBTENER);
@@ -136,12 +136,12 @@ public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
         return lista;
     }
 
-    private MovimientoFinanciero  parserMovimientoFinanciero () throws SQLException {
-        MovimientoFinanciero  movimientoFinanciero = new MovimientoFinanciero();
+    private MovimientoFinanciero parserMovimientoFinanciero() throws SQLException {
+        MovimientoFinanciero movimientoFinanciero = new MovimientoFinanciero();
         movimientoFinanciero.setIdMovimientoFinanciero(resultados.getInt("id_movimiento_financiero"));
         movimientoFinanciero.setTotal(resultados.getFloat("total"));
         movimientoFinanciero.setMonto(resultados.getFloat("monto"));
-        movimientoFinanciero.setFecha(new Date(resultados.getTimestamp("fecha").getTime()));  
+        movimientoFinanciero.setFecha(new Date(resultados.getTimestamp("fecha").getTime()));
         movimientoFinanciero.setIdTipoTransaccion(resultados.getInt("id_tipo_transaccion"));
         return movimientoFinanciero;
     }
@@ -165,4 +165,22 @@ public class MySQLMovimientoFinanciero implements MovimientoFinancieroDAO {
         return new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
     }
 
+    public void insertarFechaActual(MovimientoFinanciero o) {
+        try {
+            conexion = new MySQLConexion().conectar();
+
+            sentencia = conexion.prepareStatement("INSERT INTO movimiento_financiero VALUES(default, ?,?,curdate(),?);");
+            sentencia.setFloat(1, o.getTotal());
+            sentencia.setFloat(2, o.getMonto());
+            sentencia.setInt(3, o.getIdTipoTransaccion());
+
+            if (sentencia.executeUpdate() == 0) {
+                throw new Excepcion("No se inserto el registro");
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+    }
 }

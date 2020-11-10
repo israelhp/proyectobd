@@ -38,7 +38,6 @@ public class MySQLAsistencia implements AsistenciaDAO {
     public void insertar(Asistencia o) {
         try {
             conexion = new MySQLConexion().conectar();
-
             sentencia = conexion.prepareStatement(INSERTAR);
             sentencia.setInt(1, o.getIdEmpleado());
 
@@ -112,9 +111,84 @@ public class MySQLAsistencia implements AsistenciaDAO {
         }
         return asistencia;
     }
-
+    
+    public Asistencia obtenerIdyFecha(Integer k) {
+        Asistencia asistencia = null;
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("select * from asistencia where id_empleado = ? and fecha = curdate();");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            if (resultados.next()) {
+                asistencia = parserAsistencia();
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return asistencia;
+    }
+    public ArrayList<Asistencia> listarPorAño(Integer k) {
+        ArrayList<Asistencia> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT * FROM asistencia WHERE YEAR(fecha) = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                Asistencia asistencia = parserAsistencia();
+                lista.add(asistencia);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
+    
+    public ArrayList<Asistencia> listarPorMesAño(Integer mes,Integer año) {
+        ArrayList<Asistencia> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT * FROM asistencia WHERE MONTH(fecha) = ? AND YEAR(fecha) = ?;");
+            sentencia.setInt(1, mes);
+            sentencia.setInt(2, año);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                Asistencia asistencia = parserAsistencia();
+                lista.add(asistencia);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
+    
+    public ArrayList<Asistencia> listarPorFecha(String fecha) {
+        ArrayList<Asistencia> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT * FROM asistencia WHERE fecha = ?;");
+            sentencia.setString(1, fecha);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                Asistencia asistencia = parserAsistencia();
+                lista.add(asistencia);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
+    
     @Override
-    public ArrayList<Asistencia> listar() {
+    public ArrayList<Asistencia> listar(){
         ArrayList<Asistencia> lista = new ArrayList();
         try {
             conexion = new MySQLConexion().conectar();
@@ -131,7 +205,6 @@ public class MySQLAsistencia implements AsistenciaDAO {
         }
         return lista;
     }
-
     private Asistencia parserAsistencia() throws SQLException {
         Asistencia asistencia = new Asistencia();
         asistencia.setIdAsistencia(resultados.getInt("id_asistencia"));

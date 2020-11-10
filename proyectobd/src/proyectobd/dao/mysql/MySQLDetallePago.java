@@ -152,4 +152,23 @@ public class MySQLDetallePago implements DetallePagoDAO {
         } catch (SQLException e) {
         }
     }
+    
+     public ArrayList<DetallePago> listarPorIDPago(Integer k) {
+        ArrayList<DetallePago> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT * FROM detalle_pago WHERE id_pago = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                DetallePago detallePago = parserDetallePago();
+                lista.add(detallePago);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
 }

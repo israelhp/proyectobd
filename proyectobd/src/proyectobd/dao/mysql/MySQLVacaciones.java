@@ -117,6 +117,25 @@ public class MySQLVacaciones implements VacacionesDAO {
         return vacaciones;
     }
 
+    public ArrayList<Vacaciones> listarVacacionesPorIdEmpleado(Integer k) {
+        ArrayList<Vacaciones> lista = new ArrayList();
+        try {
+            conexion = new MySQLConexion().conectar();
+            sentencia = conexion.prepareStatement("SELECT id_vacaciones, fecha_salida, fecha_entrada, id_empleado FROM vacaciones WHERE id_empleado = ?;");
+            sentencia.setInt(1, k);
+            resultados = sentencia.executeQuery();
+            while (resultados.next()) {
+                Vacaciones vacaciones = parserVacaciones();
+                lista.add(vacaciones);
+            }
+        } catch (SQLException e) {
+            throw new Excepcion(e.getMessage());
+        } finally {
+            cerrarConexiones();
+        }
+        return lista;
+    }
+
     @Override
     public ArrayList<Vacaciones> listar() {
         ArrayList<Vacaciones> lista = new ArrayList();
